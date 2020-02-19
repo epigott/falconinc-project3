@@ -10,6 +10,8 @@ public class Main extends JFrame implements ActionListener{
 	JButton b_home_h , b_search_h , b_admin_h, b_home_s , b_search_s , b_admin_s, b_home_a , b_search_a , b_admin_a;
 	JPanel p_home, p_search, p_admin;
 	JTextField tf_searchBar_h, tf_searchBar_s;
+	JLabel l_searchResults;
+	String searchQueary = "test";
 
 	public static void main(String[] args) {		
 		Main ui = new Main();    
@@ -80,7 +82,9 @@ public class Main extends JFrame implements ActionListener{
 		tf_searchBar_s = new JTextField(20);
 		
 		JLabel l_banner_s = new JLabel("Search");
-
+		
+		l_searchResults = new JLabel();
+				 
 		p_search.add(b_home_s);
 		
 		p_search.add(l_banner_s);	
@@ -90,6 +94,8 @@ public class Main extends JFrame implements ActionListener{
 		p_search.add(b_search_s);
 				
 		add(p_search);	
+		
+		p_search.add(l_searchResults);
 		
 		setVisible(true);
 	}
@@ -118,16 +124,31 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
+		//Home Button
 		if (e.getSource() == b_home_h || e.getSource() == b_home_s  || e.getSource() == b_home_a ) {
 			p_home.setVisible(true);
 			p_search.setVisible(false);
 			p_admin.setVisible(false);
 		}
-		else if (e.getSource() == b_search_h|| e.getSource() == b_search_s  || e.getSource() == b_search_a ) {
+		//Search Button
+		else if (e.getSource() == b_search_h|| e.getSource() == b_search_s  || e.getSource() == b_search_a ) {			
+			
+			if(e.getSource() == b_search_h) {
+				searchQueary = tf_searchBar_h.getText();
+				tf_searchBar_h.setText("");
+			}
+			else if (e.getSource() == b_search_s) {
+				searchQueary = tf_searchBar_s.getText();
+				tf_searchBar_s.setText("");
+			}
+			
+			l_searchResults.setText(searchQueary);
+			
 			p_home.setVisible(false);
 			p_search.setVisible(true);
 			p_admin.setVisible(false);
 		}
+		//Admin Button
 		else if (e.getSource() == b_admin_h|| e.getSource() == b_admin_s  || e.getSource() == b_admin_a ) {
 			p_home.setVisible(false);
 			p_search.setVisible(false);
