@@ -9,6 +9,7 @@ public class Main extends JFrame implements ActionListener{
 	
 	JButton b_home_h , b_search_h , b_admin_h, b_home_s , b_search_s , b_admin_s, b_home_a , b_search_a , b_admin_a;
 	JPanel p_home, p_search, p_admin;
+	JTextField tf_searchBar_h, tf_searchBar_s;
 
 	public static void main(String[] args) {		
 		Main ui = new Main();    
@@ -46,9 +47,13 @@ public class Main extends JFrame implements ActionListener{
 		b_admin_h = new JButton("Admin");
 		b_admin_h.addActionListener(this);
 		
+		tf_searchBar_h = new JTextField(20);
+		
 		JLabel l_banner_h = new JLabel("Falcon Eye");
 
 		p_home.add(l_banner_h);	
+		
+		p_home.add(tf_searchBar_h);
 		
 		p_home.add(b_search_h);
 		
@@ -72,10 +77,15 @@ public class Main extends JFrame implements ActionListener{
 		b_admin_s = new JButton("Admin");
 		b_admin_s.addActionListener(this);
 		
+		tf_searchBar_s = new JTextField(20);
+		
 		JLabel l_banner_s = new JLabel("Search");
-		p_search.add(l_banner_s);	
 
 		p_search.add(b_home_s);
+		
+		p_search.add(l_banner_s);	
+		
+		p_search.add(tf_searchBar_s);
 		
 		p_search.add(b_search_s);
 				
