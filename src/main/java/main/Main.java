@@ -2,16 +2,19 @@ package main;
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Main extends JFrame implements ActionListener{
 	
-	JButton b_home_h , b_search_h , b_admin_h, b_home_s , b_search_s , b_admin_s, b_home_a , b_search_a , b_admin_a;
-	JPanel p_home, p_search, p_admin;
-	JTextField tf_searchBar_h, tf_searchBar_s;
-	JLabel l_searchResults;
-	String searchQueary = "test";
+	static JButton b_home_h , b_search_h , b_admin_h, b_home_s , b_search_s , b_admin_s, b_home_a , b_search_a , b_admin_a;
+	static JPanel p_home, p_search, p_admin;
+	static JTextField tf_searchBar_h, tf_searchBar_s;
+	static JLabel l_searchResults;
+	static String searchQueary = "test";
+	static String[] l_fileInfo;
+	static JTable fileList;
+	static DefaultTableModel model;
 
 	public static void main(String[] args) {		
 		Main ui = new Main();    
@@ -115,9 +118,51 @@ public class Main extends JFrame implements ActionListener{
 		
 		JLabel l_banner_a = new JLabel("admin");
 		p_admin.add(l_banner_a);
-
+		 
 		p_admin.add(b_home_a);
 		
+		 l_fileInfo= new String[2];
+		 model = new DefaultTableModel();
+		 
+		 fileList = new JTable();
+		 fileList.setModel(model);
+		 //----------------test code---------------------
+		 model.addColumn("Name");
+		 model.addColumn("Type");
+		 
+		 l_fileInfo[0] = ("Bulbasasaur");
+		 l_fileInfo[1] = ("Grass");
+		 model.addRow(l_fileInfo);
+		 l_fileInfo[0] = ("Charmander");
+		 l_fileInfo[1] = ("Fire");
+		 model.addRow(l_fileInfo);
+		 l_fileInfo[0] = ("Squirtle");
+		 l_fileInfo[1] = ("Water");		 
+		 model.addRow(l_fileInfo);
+		 //----------------------------------------------=
+		 p_admin.add(fileList);
+		 
+		JButton b_add = new JButton("add");
+		b_add.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				l_fileInfo[0] = ("Pikachu");
+				l_fileInfo[1] =("Electric");
+				model.addRow(l_fileInfo);
+			}
+		});		
+		
+		p_admin.add(b_add);		
+		
+		JButton b_delete = new JButton("delete");
+		b_delete.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int index = fileList.getSelectedRow();
+				model.removeRow(index);
+			}
+		});		
+		
+		p_admin.add(b_delete);
+	
 		add(p_admin);	
 		
 		setVisible(true);
