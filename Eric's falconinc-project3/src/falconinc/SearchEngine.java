@@ -15,8 +15,6 @@ import java.awt.event.*;
  */
 public class SearchEngine {
     
-    
-    
     public static void main (String[] args) {
     //    System.out.println("First Code");
     
