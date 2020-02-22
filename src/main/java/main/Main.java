@@ -7,14 +7,17 @@ import javax.swing.table.DefaultTableModel;
 
 public class Main extends JFrame implements ActionListener{
 	
-	static JButton b_home_h , b_search_h , b_admin_h, b_home_s , b_search_s , b_admin_s, b_home_a , b_search_a , b_admin_a;
-	static JPanel p_home, p_search, p_admin;
-	static JTextField tf_searchBar_h, tf_searchBar_s;
+	static JButton b_home, b_search , b_admin;
+	static JPanel p_main, p_bar, p_centerPanel, p_home, p_search, p_admin, p_adminTop, p_adminCenter, p_adminBot ;
+	static JTextField tf_searchBar;
 	static JLabel l_searchResults;
-	static String searchQueary = "test";
+	static String searchQueary, searchReturn;
 	static String[] l_fileInfo;
 	static JTable fileList;
 	static DefaultTableModel model;
+	static JRadioButton andSearch, orSearch ,exactSearch;
+	static CardLayout cl = new CardLayout();
+
 
 	public static void main(String[] args) {		
 		Main ui = new Main();    
@@ -24,102 +27,104 @@ public class Main extends JFrame implements ActionListener{
 	public Main(){
 		setSize(500, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Falcon Eye");
+		setTitle("Falcon Engine");
 		setBackground(Color.white);
 		setResizable(true);	
-		setVisible(true);
 
-		addHomePane();
+		p_main = new JPanel(new BorderLayout());
+		p_main.setBackground(Color.white);
+		p_main.setVisible(true);
+		
+	 	p_centerPanel = new JPanel(cl);
+	 	p_centerPanel.setBackground(Color.white);
+		p_main.add(p_centerPanel, BorderLayout.CENTER);
+	 	
+	 	p_home = new JPanel();
+	 	p_home.setBackground(Color.white);
+	 	p_home.setVisible(true);
+	 	p_centerPanel.add(p_home, "home");
+	 	cl.show(p_centerPanel, "home");
+
+	 	
+		add(p_main);
+		
+		addBarPane();
 		addSearchPane();
 		addAdminPane();	
 		
 		p_admin.setVisible(false);
 		p_search.setVisible(false);
-		p_home.setVisible(true);
+		p_bar.setVisible(true);
 		
 	}
 	
-	private void addHomePane(){
-		p_home = new JPanel();	
-		p_home.setBackground(Color.white);
+	private void addBarPane(){
+		p_bar = new JPanel( new FlowLayout());	
+		p_bar.setBackground(Color.white);		
 		
-		b_home_h = new JButton("Home");
-		b_home_h.addActionListener(this);
+		b_home = new JButton("Home");
+		b_home.addActionListener(this);
 		
-		b_search_h = new JButton("Search");
-		b_search_h.addActionListener(this);
+		b_search = new JButton("Search");
+		b_search.addActionListener(this);
 		
-		b_admin_h = new JButton("Admin");
-		b_admin_h.addActionListener(this);
+		b_admin = new JButton("Admin");
+		b_admin.addActionListener(this);
 		
-		tf_searchBar_h = new JTextField(20);
+		ButtonGroup searchOption = new ButtonGroup();
 		
-		JLabel l_banner_h = new JLabel("Falcon Eye");
+		andSearch = new JRadioButton("and" , true);
+		orSearch = new JRadioButton("or" , false);
+		exactSearch = new JRadioButton("exact" , false);
+		searchOption.add(andSearch);
+		searchOption.add(orSearch);
+		searchOption.add(exactSearch);
 
-		p_home.add(l_banner_h);	
+		p_bar.add(b_home);
 		
-		p_home.add(tf_searchBar_h);
+		tf_searchBar = new JTextField(20);
 		
-		p_home.add(b_search_h);
+		JLabel l_banner = new JLabel("Falcon Engine");
+
+		p_bar.add(l_banner);			
+
+		p_bar.add(tf_searchBar);		
+
+		p_bar.add(b_search);
 		
-		p_home.add(b_admin_h);
+		p_bar.add(b_admin);
 		
-		add(p_home);	
+		p_bar.add(andSearch);
+		p_bar.add(orSearch);
+		p_bar.add(exactSearch);
 		
-		setVisible(true);
+		p_main.add(p_bar, BorderLayout.PAGE_START);	
 	}
 
 	private void addSearchPane(){
 		p_search = new JPanel();
 		p_search.setBackground(Color.white);
 		
-		b_home_s = new JButton("Home");
-		b_home_s.addActionListener(this);
-		
-		b_search_s = new JButton("Search");
-		b_search_s.addActionListener(this);
-		
-		b_admin_s = new JButton("Admin");
-		b_admin_s.addActionListener(this);
-		
-		tf_searchBar_s = new JTextField(20);
-		
-		JLabel l_banner_s = new JLabel("Search");
-		
-		l_searchResults = new JLabel();
-				 
-		p_search.add(b_home_s);
-		
-		p_search.add(l_banner_s);	
-		
-		p_search.add(tf_searchBar_s);
-		
-		p_search.add(b_search_s);
-				
-		add(p_search);	
+		l_searchResults = new JLabel("test");
 		
 		p_search.add(l_searchResults);
 		
-		setVisible(true);
+		p_search.setVisible(true);
+
+		p_centerPanel.add(p_search, "search");	
 	}
 	
 	private void addAdminPane(){
-		p_admin = new JPanel();	
+		p_admin = new JPanel(new BorderLayout());
         p_admin.setBackground(Color.white);
-        
-		b_home_a = new JButton("Home");
-		b_home_a.addActionListener(this);
-		
-		b_search_a = new JButton("Search");
-		b_search_a.addActionListener(this);
-		
-		b_admin_a = new JButton("Admin");
-		b_admin_a.addActionListener(this);
-		
+		p_adminTop = new JPanel(new GridLayout());
+		p_adminTop.setBackground(Color.white);
+		p_adminCenter = new JPanel();
+		p_adminCenter.setBackground(Color.white);
+		p_adminBot = new JPanel();
+		p_adminBot.setBackground(Color.white);
+        						
 		JLabel l_banner_a = new JLabel("admin");
-		p_admin.add(l_banner_a);
-		 
-		p_admin.add(b_home_a);
 		
 		 l_fileInfo= new String[2];
 		 model = new DefaultTableModel();
@@ -140,7 +145,7 @@ public class Main extends JFrame implements ActionListener{
 		 l_fileInfo[1] = ("Water");		 
 		 model.addRow(l_fileInfo);
 		 //----------------------------------------------=
-		 p_admin.add(fileList);
+		
 		 
 		JButton b_add = new JButton("add");
 		b_add.addActionListener(new ActionListener(){
@@ -150,54 +155,63 @@ public class Main extends JFrame implements ActionListener{
 				model.addRow(l_fileInfo);
 			}
 		});		
-		
-		p_admin.add(b_add);		
+				
 		
 		JButton b_delete = new JButton("delete");
 		b_delete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int index = fileList.getSelectedRow();
-				model.removeRow(index);
+				if(index != -1) {
+				model.removeRow(index);		
+				}
 			}
 		});		
 		
-		p_admin.add(b_delete);
-	
-		add(p_admin);	
+		p_adminTop.add(l_banner_a);
 		
-		setVisible(true);
+		p_adminCenter.add(fileList);
+		
+		p_adminBot.add(b_add);
+		p_adminBot.add(b_delete);
+		
+		p_admin.add(p_adminTop, BorderLayout.PAGE_START);
+		p_admin.add(p_adminCenter, BorderLayout.CENTER);
+		p_admin.add(p_adminBot, BorderLayout.PAGE_END);
+		
+		p_admin.setVisible(true);
+		
+		p_centerPanel.add(p_admin, "admin");
 	}
 	
 	public void actionPerformed(ActionEvent e){
 		//Home Button
-		if (e.getSource() == b_home_h || e.getSource() == b_home_s  || e.getSource() == b_home_a ) {
-			p_home.setVisible(true);
-			p_search.setVisible(false);
-			p_admin.setVisible(false);
+		if (e.getSource() == b_home ) {
+		cl.show(p_centerPanel, "home");
 		}
 		//Search Button
-		else if (e.getSource() == b_search_h|| e.getSource() == b_search_s  || e.getSource() == b_search_a ) {			
+		else if (e.getSource() == b_search) {			
 			
-			if(e.getSource() == b_search_h) {
-				searchQueary = tf_searchBar_h.getText();
-				tf_searchBar_h.setText("");
+			searchQueary = tf_searchBar.getText();
+			
+			if(andSearch.isSelected()) {
+				searchReturn = ("and " + searchQueary);
 			}
-			else if (e.getSource() == b_search_s) {
-				searchQueary = tf_searchBar_s.getText();
-				tf_searchBar_s.setText("");
+			else if(orSearch.isSelected()){
+				searchReturn = ("or " + searchQueary);
+			}
+			else if(exactSearch.isSelected() ){
+				searchReturn = ("exact " + searchQueary);
 			}
 			
-			l_searchResults.setText(searchQueary);
+			l_searchResults.setText(searchReturn);
 			
-			p_home.setVisible(false);
-			p_search.setVisible(true);
-			p_admin.setVisible(false);
+			tf_searchBar.setText("");
+			
+			cl.show(p_centerPanel, "search");
 		}
 		//Admin Button
-		else if (e.getSource() == b_admin_h|| e.getSource() == b_admin_s  || e.getSource() == b_admin_a ) {
-			p_home.setVisible(false);
-			p_search.setVisible(false);
-			p_admin.setVisible(true);
+		else if (e.getSource() == b_admin) {			
+			cl.show(p_centerPanel, "admin");
 		} 		
 	} 
 }
