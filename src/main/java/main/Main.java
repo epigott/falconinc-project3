@@ -5,10 +5,14 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import org.kordamp.ikonli.materialdesign.MaterialDesign;
+import org.kordamp.ikonli.swing.FontIcon;
+
 public class Main extends JFrame implements ActionListener{
 	
 	static JButton b_home, b_search , b_admin;
-	static JPanel p_main, p_bar, p_centerPanel, p_home, p_search, p_admin, p_adminTop, p_adminCenter, p_adminBot ;
+	static JPanel p_main, p_bar, p_barTop, p_barBot, p_centerPanel, p_home, p_search, p_admin, p_adminTop, p_adminBot ;
+	static JScrollPane  p_adminCenter;
 	static JTextField tf_searchBar;
 	static JLabel l_searchResults;
 	static String searchQueary, searchReturn;
@@ -25,7 +29,7 @@ public class Main extends JFrame implements ActionListener{
 	}
 	
 	public Main(){
-		setSize(500, 500);
+		setSize(550, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Falcon Engine");
 		setBackground(Color.white);
@@ -37,18 +41,12 @@ public class Main extends JFrame implements ActionListener{
 		
 	 	p_centerPanel = new JPanel(cl);
 	 	p_centerPanel.setBackground(Color.white);
-		p_main.add(p_centerPanel, BorderLayout.CENTER);
-	 	
-	 	p_home = new JPanel();
-	 	p_home.setBackground(Color.white);
-	 	p_home.setVisible(true);
-	 	p_centerPanel.add(p_home, "home");
-	 	cl.show(p_centerPanel, "home");
-
+		p_main.add(p_centerPanel, BorderLayout.CENTER);	 	
 	 	
 		add(p_main);
 		
 		addBarPane();
+		addHomePane();
 		addSearchPane();
 		addAdminPane();	
 		
@@ -58,45 +56,61 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
+	private void addHomePane() {
+	 	p_home = new JPanel();
+	 	p_home.setBackground(Color.white);
+	 	p_home.setVisible(true);
+	 	p_centerPanel.add(p_home, "home");
+	 	cl.show(p_centerPanel, "home");		
+	}
+	
 	private void addBarPane(){
-		p_bar = new JPanel( new FlowLayout());	
-		p_bar.setBackground(Color.white);		
+		p_bar = new JPanel(new BorderLayout());
+		p_barTop = new JPanel();
+		p_barBot = new JPanel();
+		p_bar.add(p_barTop, BorderLayout.PAGE_START);
+		p_bar.add(p_barBot, BorderLayout.PAGE_END);
 		
-		b_home = new JButton("Home");
-		b_home.addActionListener(this);
+		Color barColor = Color.lightGray;
+		p_barTop.setBackground(barColor);
+		p_barBot.setBackground(barColor);
 		
-		b_search = new JButton("Search");
-		b_search.addActionListener(this);
+		FontIcon homeIcon = FontIcon.of(MaterialDesign.MDI_HOME_OUTLINE);
+		b_home = new JButton(homeIcon);
+		b_home.addActionListener(this);		
 		
-		b_admin = new JButton("Admin");
+		FontIcon searchIcon = FontIcon.of(MaterialDesign.MDI_MAGNIFY);
+		b_search = new JButton(searchIcon);
+		b_search.addActionListener(this);	
+		
+		FontIcon adminIcon = FontIcon.of(MaterialDesign.MDI_FORMAT_LIST_BULLETED);
+		b_admin = new JButton(adminIcon);
 		b_admin.addActionListener(this);
 		
 		ButtonGroup searchOption = new ButtonGroup();
 		
 		andSearch = new JRadioButton("and" , true);
+		andSearch.setBackground(barColor);
 		orSearch = new JRadioButton("or" , false);
+		orSearch.setBackground(barColor);
 		exactSearch = new JRadioButton("exact" , false);
+		exactSearch.setBackground(barColor);
 		searchOption.add(andSearch);
 		searchOption.add(orSearch);
-		searchOption.add(exactSearch);
-
-		p_bar.add(b_home);
+		searchOption.add(exactSearch);	
 		
-		tf_searchBar = new JTextField(20);
+		tf_searchBar = new JTextField(20);	
+		JLabel l_banner = new JLabel("Falcon Engine");	
 		
-		JLabel l_banner = new JLabel("Falcon Engine");
+		p_barTop.add(b_home);
+		p_barTop.add(l_banner);			
+		p_barTop.add(tf_searchBar);		
+		p_barTop.add(b_search);
+		p_barTop.add(b_admin);	
 
-		p_bar.add(l_banner);			
-
-		p_bar.add(tf_searchBar);		
-
-		p_bar.add(b_search);
-		
-		p_bar.add(b_admin);
-		
-		p_bar.add(andSearch);
-		p_bar.add(orSearch);
-		p_bar.add(exactSearch);
+		p_barBot.add(andSearch);
+		p_barBot.add(orSearch);
+		p_barBot.add(exactSearch);
 		
 		p_main.add(p_bar, BorderLayout.PAGE_START);	
 	}
@@ -117,10 +131,10 @@ public class Main extends JFrame implements ActionListener{
 	private void addAdminPane(){
 		p_admin = new JPanel(new BorderLayout());
         p_admin.setBackground(Color.white);
-		p_adminTop = new JPanel(new GridLayout());
+		p_adminTop = new JPanel();
 		p_adminTop.setBackground(Color.white);
-		p_adminCenter = new JPanel();
-		p_adminCenter.setBackground(Color.white);
+		p_adminCenter = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		p_adminCenter.getViewport().setBackground(Color.white);
 		p_adminBot = new JPanel();
 		p_adminBot.setBackground(Color.white);
         						
@@ -167,9 +181,9 @@ public class Main extends JFrame implements ActionListener{
 			}
 		});		
 		
-		p_adminTop.add(l_banner_a);
-		
-		p_adminCenter.add(fileList);
+		p_adminTop.add(l_banner_a);		
+
+		p_adminCenter.setViewportView(fileList);
 		
 		p_adminBot.add(b_add);
 		p_adminBot.add(b_delete);
