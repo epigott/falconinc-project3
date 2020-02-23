@@ -49,7 +49,7 @@ public class guiWinApp {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the application. This is a free-standing GUI window.
 	 */
 	public guiWinApp() {
 		initialize();
