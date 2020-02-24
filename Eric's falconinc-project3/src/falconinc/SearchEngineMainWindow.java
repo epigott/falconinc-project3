@@ -15,7 +15,7 @@ import java.awt.event.*;
  *
  * @author epigott
  */
-public class SearchEngineMainWIndow {
+public class SearchEngineMainWindow {
     
     public static void main (String[] args) {
 
