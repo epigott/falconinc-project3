@@ -84,6 +84,7 @@ public class SearchEngineAdminWindow {
     
     // String[] fake_file_list = {'C\:\\iamafile\\file1.txt', 'C\:\\iamafile\\file1.txt', 'C\:\\iamafile\\file1.txt'};
     String[] data = new String[3];
+    // Netbeans complains about errors on the next three lines, but compiles and runs with issue:
     data[0] = "C\:\\myfiles\\file1.txt";
     data[1] = "C\:\\myfiles\\file2.txt";
     data[2] = "C\:\\myfiles\\file3.txt";
