@@ -233,7 +233,7 @@ public class Main extends JFrame implements ActionListener{
 		p_adminBot = new JPanel();
 		p_adminBot.setBackground(Color.LIGHT_GRAY);
         						
-		JLabel l_banner_a = new JLabel("admin");
+		JLabel l_banner_a = new JLabel("File List");
 		
 		 l_fileInfo= new String[2];
 		 model = new DefaultTableModel();
