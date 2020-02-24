@@ -18,7 +18,7 @@ import javax.swing.JToggleButton;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import javax.swing.BoxLayout;
-//import com.jgoodies.forms.layout.FormLayout;	Java problem, in Eclipse when copying folder over?
+//import com.jgoodies.forms.layout.FormLayout;	// Java problem, in Eclipse when copying folder over?
 //import com.jgoodies.forms.layout.ColumnSpec;
 //import com.jgoodies.forms.layout.RowSpec;
 //import com.jgoodies.forms.layout.FormSpecs;
@@ -98,6 +98,11 @@ public class guiWinApp {
 		
 		 // User to click GUI Button to view Admin/Maintainance View
 		btnAdmin = new JButton("Admin/Maintainance");
+		btnAdmin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Open New Admin Window");
+			}
+		});
 		GridBagConstraints gbc_btnAdmin = new GridBagConstraints();
 		gbc_btnAdmin.anchor = GridBagConstraints.SOUTH;
 		gbc_btnAdmin.insets = new Insets(0, 0, 0, 5);
