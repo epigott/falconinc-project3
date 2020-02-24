@@ -5,6 +5,7 @@
  * NOTE: Code is not considered 'clean', 'tidy', or 'complete', until explicitly indicated here or submitted as final code.
  */
 package falconinc;
+import falconinc.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -23,6 +24,10 @@ public class SearchEngineMainWindow {
 
     // Create main window frame.
     JFrame sewindow = new JFrame("Search Engine - Falcon INC");
+    
+    // Create admin window frame.
+    SearchEngineAdminWindow admin_panel = new SearchEngineAdminWindow();
+    JFrame admin_window = admin_panel.panel();
     
     // Will prevent the system process created by running in IDE from hanging when closed.
     sewindow.addWindowListener(new WindowAdapter() {
@@ -46,7 +51,6 @@ public class SearchEngineMainWindow {
     
     // GridBagLayout Constraints.
     GridBagConstraints c = new GridBagConstraints();
-    
     
 // -- WINDOW HEADING -- //
     
@@ -187,7 +191,10 @@ public class SearchEngineMainWindow {
     // Draw search engine window.
     sewindow.setVisible(true);
     
-// -- END WINDOW CREATION -- //
+    // Draw search engine window.
+    admin_window.setVisible(true);
+    
+// -- END WINDOWs CREATION -- //
     
     }
         
