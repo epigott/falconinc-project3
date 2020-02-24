@@ -1,6 +1,7 @@
 package falconinc.src.project_3;
 
-/* Written by Akanksha Chavan */
+/* Written by Akanksha Chavan; Tampa, FL
+ * COP 2805C-- Java 2 Programming */
 
 import java.awt.EventQueue;
 
@@ -58,7 +59,8 @@ public class guiWinApp {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() { // GUI Window background color, location
+	// Show GUI Window background color, location of window components
+	private void initialize() { 
 		frame =new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -68,14 +70,16 @@ public class guiWinApp {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		JButton btnSearch = new JButton("Search");	// GUI Button
+		// Click GUI Button to Search for files ** Not functional yet-- to be edited/added in at a later date
+		JButton btnSearch = new JButton("Search");	
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Searching..."); //Message Dialogue Box
+			JOptionPane.showMessageDialog(null, "Searching..."); //Show Message Dialogue Box
 			}
 		});
 		
-		textField = new JTextField(); // Text box to add search files index
+		// Text box to add search files index
+		textField = new JTextField(); 
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -92,7 +96,8 @@ public class guiWinApp {
 		gbc_btnSearch.gridy = 1;
 		frame.getContentPane().add(btnSearch, gbc_btnSearch);
 		
-		btnAdmin = new JButton("Admin/Maintainance"); // GUI Button to view Admin/Maintainance View
+		 // User to click GUI Button to view Admin/Maintainance View
+		btnAdmin = new JButton("Admin/Maintainance");
 		GridBagConstraints gbc_btnAdmin = new GridBagConstraints();
 		gbc_btnAdmin.anchor = GridBagConstraints.SOUTH;
 		gbc_btnAdmin.insets = new Insets(0, 0, 0, 5);
@@ -100,13 +105,17 @@ public class guiWinApp {
 		gbc_btnAdmin.gridy = 7;
 		frame.getContentPane().add(btnAdmin, gbc_btnAdmin);
 		
-		btnAbout = new JButton("About"); // GUI Button to view About Section
+		// User to click GUI Button to view About Section
+		btnAbout = new JButton("About"); 
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Project 3 Solution \nWritten by Akanksha Chavan \n Tampa, FL");
+			JOptionPane.showMessageDialog(null, "Search Engine UI --Project 3 "
+					+ "\nWritten by: Akanksha Chavan \nTampa, FL");
 			}
 		});
-		GridBagConstraints gbc_btnAbout = new GridBagConstraints(); // Panel to exit out of window
+		
+		// Panel to exit out of window
+		GridBagConstraints gbc_btnAbout = new GridBagConstraints(); 
 		gbc_btnAbout.anchor = GridBagConstraints.SOUTH;
 		gbc_btnAbout.gridx = 1;
 		gbc_btnAbout.gridy = 7;
