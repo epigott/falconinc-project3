@@ -26,8 +26,8 @@ public class SearchEngineMainWindow {
     JFrame sewindow = new JFrame("Search Engine - Falcon INC");
     
     // Create admin window frame.
-    SearchEngineAdminWindow admin_panel = new SearchEngineAdminWindow();
-    JFrame admin_window = admin_panel.panel();
+    // SearchEngineAdminWindow admin_panel = new SearchEngineAdminWindow();
+    // JFrame admin_window = admin_panel.panel();
     
     // Will prevent the system process created by running in IDE from hanging when closed.
     sewindow.addWindowListener(new WindowAdapter() {
@@ -150,6 +150,9 @@ public class SearchEngineMainWindow {
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(about_button, c);
     
+    // Event Handler for About Button.
+    about_button.addActionListener(new MainWindowAboutButtonEventHandler());
+    
     // Create and add the admin button to the buttons panel.
     JButton admin_button = new JButton("Admin");
     c.fill = GridBagConstraints.HORIZONTAL;
@@ -159,6 +162,9 @@ public class SearchEngineMainWindow {
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(admin_button, c);
     
+    // Event Handler for Admin Button.
+    admin_button.addActionListener(new MainWindowAdminButtonEventHandler());
+    
     // Create and add the quit button to the buttons panel.
     JButton quit_button = new JButton("Quit");
     c.fill = GridBagConstraints.HORIZONTAL;
@@ -167,6 +173,9 @@ public class SearchEngineMainWindow {
     c.insets = new Insets(10, 100, 10, 100);
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(quit_button, c);
+    
+    // Event Handler for Quit Button.
+    quit_button.addActionListener(new MainWindowQuitButtonEventHandler());
     
 // -- PAINTING MAIN WINDOW -- //
     
@@ -191,11 +200,10 @@ public class SearchEngineMainWindow {
     // Draw search engine window.
     sewindow.setVisible(true);
     
-    // Draw search engine window.
-    admin_window.setVisible(true);
-    
 // -- END WINDOWs CREATION -- //
     
     }
-        
+    
+    
+       
 }

@@ -85,9 +85,9 @@ public class SearchEngineAdminWindow {
     // String[] fake_file_list = {'C\:\\iamafile\\file1.txt', 'C\:\\iamafile\\file1.txt', 'C\:\\iamafile\\file1.txt'};
     String[] data = new String[3];
     // Netbeans complains about errors on the next three lines, but compiles and runs with issue:
-    data[0] = "C\:\\myfiles\\file1.txt";
-    data[1] = "C\:\\myfiles\\file2.txt";
-    data[2] = "C\:\\myfiles\\file3.txt";
+    data[0] = "C:\\myfiles\\file1.txt";
+    data[1] = "C:\\myfiles\\file2.txt";
+    data[2] = "C:\\myfiles\\file3.txt";
     JList<String> myList = new JList<String>(data);
     
     c.gridx = 0;
@@ -113,6 +113,9 @@ public class SearchEngineAdminWindow {
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(add_file_button, c);
     
+    // Event Handler for Add File Button
+    add_file_button.addActionListener(new AdminWindowAddFileButtonEventHandler());
+    
     // Create and add the remove file button to the buttons panel.
     JButton remove_file_button = new JButton("Remove File");
     c.fill = GridBagConstraints.HORIZONTAL;
@@ -122,6 +125,9 @@ public class SearchEngineAdminWindow {
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(remove_file_button, c);
     
+    // Event Handler for Remove File Button
+    remove_file_button.addActionListener(new AdminWindowRemoveFileButtonEventHandler());
+    
     // Create and add the update index button to the buttons panel.
     JButton update_index_button = new JButton("Update Index");
     c.fill = GridBagConstraints.HORIZONTAL;
@@ -130,6 +136,9 @@ public class SearchEngineAdminWindow {
     c.insets = new Insets(10, 100, 10, 100);
     c.anchor = GridBagConstraints.PAGE_END;
     buttons_panel.add(update_index_button, c);
+    
+    // Event Handler for Update Index Button
+    update_index_button.addActionListener(new AdminWindowUpdateIndexButtonEventHandler());
     
 // -- PAINTING MAIN WINDOW -- //
     
@@ -151,14 +160,8 @@ public class SearchEngineAdminWindow {
     c.gridy = 2;
     admin_window.add(buttons_panel, BorderLayout.SOUTH);
     
-    // Draw search engine window.
-    admin_window.setVisible(true);
-    
-    // Draw search engine window.
-    admin_window.setVisible(true);
-    
 // -- END WINDOWs CREATION -- //        
-        return admin_window;
+    return admin_window;
         
     }
     
