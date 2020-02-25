@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import project_3.guiWinApp;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -72,6 +75,7 @@ public class guiWinApp {
 		
 		// Click GUI Button to Search for files ** Not functional yet-- to be edited/added in at a later date
 		JButton btnSearch = new JButton("Search");	
+		btnSearch.setToolTipText("User hit search to find files");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(null, "Searching..."); //Show Message Dialogue Box
@@ -80,6 +84,7 @@ public class guiWinApp {
 		
 		// Text box to add search files index
 		textField = new JTextField(); 
+		textField.setToolTipText("Enter files you want");
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -98,6 +103,7 @@ public class guiWinApp {
 		
 		 // User to click GUI Button to view Admin/Maintainance View
 		btnAdmin = new JButton("Admin/Maintainance");
+		btnAdmin.setToolTipText("Admin for new window");	// Tool tip to show user, if mouse hovers over area
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Open New Admin Window");
@@ -112,6 +118,7 @@ public class guiWinApp {
 		
 		// User to click GUI Button to view About Section
 		btnAbout = new JButton("About"); 
+		btnAbout.setToolTipText("About-Message Box"); // Tool tip to show user, if mouse hovers over area
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(null, "Search Engine UI --Project 3 "
