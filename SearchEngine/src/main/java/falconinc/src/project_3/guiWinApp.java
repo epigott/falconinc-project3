@@ -1,7 +1,8 @@
 package falconinc.src.project_3;
 
 /* Written by Akanksha Chavan; Tampa, FL
- * COP 2805C-- Java 2 Programming */
+ * COP 2805C-- Java 2 Programming 
+ * Project 3*/
 
 import java.awt.EventQueue;
 
@@ -10,9 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
-
-import project_3.guiWinApp;
-
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
