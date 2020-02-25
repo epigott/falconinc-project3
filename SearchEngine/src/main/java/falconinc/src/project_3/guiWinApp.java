@@ -75,7 +75,7 @@ public class guiWinApp {
 		
 		// Click GUI Button to Search for files ** Not functional yet-- to be edited/added in at a later date
 		JButton btnSearch = new JButton("Search");	
-		btnSearch.setToolTipText("User hit search to find files");
+		btnSearch.setToolTipText("User hit search to find files"); // Tool tip to show user, search button
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(null, "Searching..."); //Show Message Dialogue Box
@@ -84,7 +84,7 @@ public class guiWinApp {
 		
 		// Text box to add search files index
 		textField = new JTextField(); 
-		textField.setToolTipText("Enter files you want");
+		textField.setToolTipText("Enter files you want"); // Tool tip to show user, text box
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
