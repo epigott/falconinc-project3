@@ -103,7 +103,7 @@ public class guiWinApp {
 		
 		 // User to click GUI Button to view Admin/Maintainance View
 		btnAdmin = new JButton("Admin/Maintainance");
-		btnAdmin.setToolTipText("Admin for new window");	// Tool tip to show user, if mouse hovers over area
+		btnAdmin.setToolTipText("Admin for new window");	// Tool tip to show user, admin window
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Open New Admin Window");
@@ -118,7 +118,7 @@ public class guiWinApp {
 		
 		// User to click GUI Button to view About Section
 		btnAbout = new JButton("About"); 
-		btnAbout.setToolTipText("About-Message Box"); // Tool tip to show user, if mouse hovers over area
+		btnAbout.setToolTipText("About-Message Box"); // Tool tip to show user, about section
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(null, "Search Engine UI --Project 3 "
