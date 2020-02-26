@@ -53,6 +53,7 @@ public class Main extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Falcon Engine");
 		setBackground(Color.white);
+		setLocationRelativeTo(null);
 		setResizable(true);				
 	
 		cl_prime = new CardLayout();
