@@ -10,7 +10,7 @@ import org.kordamp.ikonli.swing.FontIcon;
 
 public class Main extends JFrame implements ActionListener{
 	
-	/*p_prime--p_home--p_homeTop
+	/*p_prime--p_home--p_homeBot
 	    \		   \			 p_homeCenterTop
 		 \			\			 /
 		  \			 \			/
@@ -32,7 +32,7 @@ public class Main extends JFrame implements ActionListener{
 	*/
 	JButton b_home, b_search , b_search_h , b_admin, b_admin_h;
 	JPanel  p_prime, p_home, p_main, p_bar, p_barTop, p_barBot, p_centerPanel, p_searchResults, p_admin, p_adminTop, p_adminBot ,
-			p_homeTop,  p_homeCenter, p_homeCenterTop, p_homeCenterMid, p_homeCenterBot; 
+			p_homeBot,  p_homeCenter, p_homeCenterTop, p_homeCenterMid, p_homeCenterBot; 
 	JScrollPane  p_adminCenter;
 	JTextField tf_searchBar_b, tf_searchBar_h;
 	JLabel l_searchResults;
@@ -90,11 +90,11 @@ public class Main extends JFrame implements ActionListener{
 	
 	private void addHomePane() {
 	 	p_home = new JPanel(new BorderLayout());
-		Color pageColor = Color.white;
+		Color pageColor = Color.lightGray;
 	 	p_home.setVisible(true);
 	 	
-	 	p_homeTop = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	 	p_homeTop.setBackground(pageColor);
+	 	p_homeBot = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+	 	p_homeBot.setBackground(pageColor);
 	 	
 	 	p_homeCenter = new JPanel(new GridBagLayout());
 	 	p_homeCenter.setBackground(pageColor);
@@ -109,8 +109,10 @@ public class Main extends JFrame implements ActionListener{
 	 	p_homeCenterBot = new JPanel();
 	 	p_homeCenterBot.setBackground(pageColor);
 	 	
-		p_home.add(p_homeTop, BorderLayout.PAGE_START);
+		p_home.add(p_homeBot, BorderLayout.PAGE_END);
 		p_home.add(p_homeCenter, BorderLayout.CENTER);
+		
+
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -146,7 +148,7 @@ public class Main extends JFrame implements ActionListener{
 		searchOption.add(orSearch_h);
 		searchOption.add(exactSearch_h);
 		
-		p_homeTop.add(b_admin_h);
+		p_homeBot.add(b_admin_h);
 		
 		p_homeCenterTop.add(l_banner);
 	 	
