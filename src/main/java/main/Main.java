@@ -2,6 +2,8 @@ package main;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +18,12 @@ public class Main extends JFrame implements ActionListener{
 	
 
 	public static void main(String[] args) {
-		FileDatabase.getConnection();
+		try {
+			FileDatabase.getConnection();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Main ui = new Main();    
 		ui.setVisible(true);
 	}
@@ -227,25 +234,32 @@ CardLayout cl_centerPane, cl_prime;
 		 fileList = new JTable();
 		 fileList.setModel(model);
 		 //----------------test code---------------------
+		 model.addColumn("id");
 		 model.addColumn("Name");
-		 model.addColumn("Type");
 		 
-		 fileInfo[0] = ("Bulbasasaur");
-		 fileInfo[1] = ("Grass");
+		 fileInfo[0] = ("1");
+		 fileInfo[1] = ("Bulbasasaur");
 		 model.addRow(fileInfo);
-		 fileInfo[0] = ("Charmander");
-		 fileInfo[1] = ("Fire");
+		 fileInfo[0] = ("2");
+		 fileInfo[1] = ("Charmander");
 		 model.addRow(fileInfo);
-		 fileInfo[0] = ("Squirtle");
-		 fileInfo[1] = ("Water");		 
+		 fileInfo[0] = ("3");
+		 fileInfo[1] = ("Squirtle");
 		 model.addRow(fileInfo);
 		 //----------------------------------------------=
 		
 		JButton b_add = new JButton("Add");
 		b_add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				fileInfo = FileCollector.collectFileInfo();
-				model.addRow(fileInfo);
+				
+				try {
+					FileCollector.addFile();
+					model.addRow(FileDatabase.getRow(1));
+					
+				} catch (IllegalArgumentException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});		
 				

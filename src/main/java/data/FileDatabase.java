@@ -5,9 +5,9 @@ import java.util.*;
 
 public class FileDatabase {
 	static private Connection con;
-	static String[] columns;
-	static String[] dataType;
-	static String tableName;
+	static String[] columns = new String[] {"id", "fileName"};
+	static String[] dataType = new String[] {"integer", "varchar(50)"};;
+	static String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
@@ -17,9 +17,6 @@ public class FileDatabase {
 
 
 	static private void initialize() throws SQLException {	
-		columns = new String[] {"id", "fileLocation"};
-		dataType = new String[] {"integer", "varchar(50)"};
-		tableName = "thePile";
 		
 		/*SQLite uses a database to store its databases called sqlite_master.
 		 * Here where looking in that database to find thePile.
@@ -61,7 +58,7 @@ public class FileDatabase {
 	
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
 
-		String[] returnArray = new String[10];
+		String[] returnArray = {"4","Pikachu"};
 		
 		return returnArray;
 	 }	
