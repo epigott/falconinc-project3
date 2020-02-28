@@ -9,6 +9,12 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.swing.FontIcon;
 
 public class Main extends JFrame implements ActionListener{
+
+	public static void main(String[] args) {		
+		Main ui = new Main();    
+		ui.setVisible(true);
+	}
+	
 	
 	/*p_prime--p_home--p_homeBot
 	    \		   \			 p_homeCenterTop
@@ -43,10 +49,6 @@ public class Main extends JFrame implements ActionListener{
 	JRadioButton andSearch, orSearch ,exactSearch, andSearch_h, orSearch_h ,exactSearch_h;
 	CardLayout cl_centerPane, cl_prime;
 
-	public static void main(String[] args) {		
-		Main ui = new Main();    
-		ui.setVisible(true);
-	}
 	
 	public Main(){
 		setSize(550, 500);
@@ -72,7 +74,6 @@ public class Main extends JFrame implements ActionListener{
 	 	cl_prime.show(p_prime, "home");
 
 		addBarPane();
-		System.out.println("ok");
 		cl_centerPane = new CardLayout();
 	 	p_centerPanel = new JPanel(cl_centerPane);
 	 	p_centerPanel.setBackground(Color.white);
