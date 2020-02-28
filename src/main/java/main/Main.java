@@ -5,6 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import data.FileDatabase;
+import collection.FileCollector;
+import collection.SearchEngine;
+
 import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.swing.FontIcon;
 
@@ -258,8 +262,7 @@ public class Main extends JFrame implements ActionListener{
 		JButton b_add = new JButton("Add");
 		b_add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				fileInfo[0] = ("Pikachu");
-				fileInfo[1] =("Electric");
+				fileInfo = FileCollector.collectFileInfo();
 				model.addRow(fileInfo);
 			}
 		});		
@@ -317,13 +320,13 @@ public class Main extends JFrame implements ActionListener{
 				searchQueary = tf_searchBar_b.getText();
 				
 				if(andSearch.isSelected()) {
-					searchReturn = ("and " + searchQueary);
+					searchReturn = SearchEngine.andSearch(searchQueary);
 				}
 				else if(orSearch.isSelected()){
-					searchReturn = ("or " + searchQueary);
+					searchReturn = SearchEngine.orSearch(searchQueary);
 				}
 				else if(exactSearch.isSelected() ){
-					searchReturn = ("exact " + searchQueary);
+					searchReturn = SearchEngine.exactSearch(searchQueary);
 				}			
 			
 			l_searchResults.setText(searchReturn);
