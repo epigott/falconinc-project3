@@ -9,12 +9,6 @@ import org.kordamp.ikonli.materialdesign.MaterialDesign;
 import org.kordamp.ikonli.swing.FontIcon;
 
 public class Main extends JFrame implements ActionListener{
-
-	public static void main(String[] args) {		
-		Main ui = new Main();    
-		ui.setVisible(true);
-	}
-	
 	
 	/*p_prime--p_home--p_homeBot
 	    \		   \			 p_homeCenterTop
@@ -43,12 +37,16 @@ public class Main extends JFrame implements ActionListener{
 	JTextField tf_searchBar_b, tf_searchBar_h;
 	JLabel l_searchResults;
 	String searchQueary, searchReturn;
-	String[] l_fileInfo;
+	String[] fileInfo;
 	JTable fileList;
 	DefaultTableModel model;
 	JRadioButton andSearch, orSearch ,exactSearch, andSearch_h, orSearch_h ,exactSearch_h;
 	CardLayout cl_centerPane, cl_prime;
 
+	public static void main(String[] args) {		
+		Main ui = new Main();    
+		ui.setVisible(true);
+	}
 	
 	public Main(){
 		setSize(550, 500);
@@ -111,9 +109,7 @@ public class Main extends JFrame implements ActionListener{
 	 	p_homeCenterBot.setBackground(pageColor);
 	 	
 		p_home.add(p_homeBot, BorderLayout.PAGE_END);
-		p_home.add(p_homeCenter, BorderLayout.CENTER);
-		
-
+		p_home.add(p_homeCenter, BorderLayout.CENTER);	
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -239,7 +235,7 @@ public class Main extends JFrame implements ActionListener{
         						
 		JLabel l_banner_a = new JLabel("File List");
 		
-		 l_fileInfo= new String[2];
+		 fileInfo= new String[2];
 		 model = new DefaultTableModel();
 		 
 		 fileList = new JTable();
@@ -248,23 +244,23 @@ public class Main extends JFrame implements ActionListener{
 		 model.addColumn("Name");
 		 model.addColumn("Type");
 		 
-		 l_fileInfo[0] = ("Bulbasasaur");
-		 l_fileInfo[1] = ("Grass");
-		 model.addRow(l_fileInfo);
-		 l_fileInfo[0] = ("Charmander");
-		 l_fileInfo[1] = ("Fire");
-		 model.addRow(l_fileInfo);
-		 l_fileInfo[0] = ("Squirtle");
-		 l_fileInfo[1] = ("Water");		 
-		 model.addRow(l_fileInfo);
+		 fileInfo[0] = ("Bulbasasaur");
+		 fileInfo[1] = ("Grass");
+		 model.addRow(fileInfo);
+		 fileInfo[0] = ("Charmander");
+		 fileInfo[1] = ("Fire");
+		 model.addRow(fileInfo);
+		 fileInfo[0] = ("Squirtle");
+		 fileInfo[1] = ("Water");		 
+		 model.addRow(fileInfo);
 		 //----------------------------------------------=
 		
 		JButton b_add = new JButton("Add");
 		b_add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				l_fileInfo[0] = ("Pikachu");
-				l_fileInfo[1] =("Electric");
-				model.addRow(l_fileInfo);
+				fileInfo[0] = ("Pikachu");
+				fileInfo[1] =("Electric");
+				model.addRow(fileInfo);
 			}
 		});		
 				
