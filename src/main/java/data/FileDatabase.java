@@ -17,7 +17,7 @@ public class FileDatabase {
 
 
 	static private void initialize() throws SQLException {	
-		columns = new String[] {"id", "fileName"};
+		columns = new String[] {"id", "fileLocation"};
 		dataType = new String[] {"integer", "varchar(50)"};
 		tableName = "thePile";
 		
