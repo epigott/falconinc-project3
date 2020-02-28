@@ -6,7 +6,7 @@ import java.util.*;
 public class FileDatabase {
 	static private Connection con;
 
-	static private void getConnection() throws ClassNotFoundException, SQLException {		
+	public static void getConnection() throws ClassNotFoundException, SQLException {		
 		Class.forName("org.sqlite.JDBC");
 		con = DriverManager.getConnection("jdbc:sqlite:TheFilePile.db");
 		initialize();		

@@ -14,43 +14,26 @@ import org.kordamp.ikonli.swing.FontIcon;
 
 public class Main extends JFrame implements ActionListener{
 	
-	/*p_prime--p_home--p_homeBot
-	    \		   \			 p_homeCenterTop
-		 \			\			 /
-		  \			 \			/
-	 	   \		 p_homeCenter--p_homeCenterMid
-			\				   \
-	 	   	 \					\
-			  \					p_homeCenterBot
-			 p_main--p_bar--p_barTop
-			  \			\
-			   \		 p_barBot
-			 	\			  
-			  	p_centerPanel--p_searchResults
-					  \	
-					   \
-			 			\		
-			 			 p_admin--p_adminTop
-			 					\
-			 					 p_adminBot
-	*/
-	JButton b_home, b_search , b_search_h , b_admin, b_admin_h;
-	JPanel  p_prime, p_home, p_main, p_bar, p_barTop, p_barBot, p_centerPanel, p_searchResults, p_admin, p_adminTop, p_adminBot ,
-			p_homeBot,  p_homeCenter, p_homeCenterTop, p_homeCenterMid, p_homeCenterBot; 
-	JScrollPane  p_adminCenter;
-	JTextField tf_searchBar_b, tf_searchBar_h;
-	JLabel l_searchResults;
-	String searchQueary, searchReturn;
-	String[] fileInfo;
-	JTable fileList;
-	DefaultTableModel model;
-	JRadioButton andSearch, orSearch ,exactSearch, andSearch_h, orSearch_h ,exactSearch_h;
-	CardLayout cl_centerPane, cl_prime;
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
+		FileDatabase.getConnection();
 		Main ui = new Main();    
 		ui.setVisible(true);
 	}
+
+JButton b_home, b_search , b_search_h , b_admin, b_admin_h;
+JPanel  p_prime, p_home, p_main, p_bar, p_barTop, p_barBot, p_centerPanel, p_searchResults, p_admin, p_adminTop, p_adminBot ,
+		p_homeBot,  p_homeCenter, p_homeCenterTop, p_homeCenterMid, p_homeCenterBot; 
+JScrollPane  p_adminCenter;
+JTextField tf_searchBar_b, tf_searchBar_h;
+JLabel l_searchResults;
+String searchQueary, searchReturn;
+String[] fileInfo;
+JTable fileList;
+DefaultTableModel model;
+JRadioButton andSearch, orSearch ,exactSearch, andSearch_h, orSearch_h ,exactSearch_h;
+CardLayout cl_centerPane, cl_prime;
+
 	
 	public Main(){
 		setSize(550, 500);
@@ -80,7 +63,6 @@ public class Main extends JFrame implements ActionListener{
 	 	p_centerPanel = new JPanel(cl_centerPane);
 	 	p_centerPanel.setBackground(Color.white);
 		p_main.add(p_centerPanel, BorderLayout.CENTER);	 
-
 		
 		addSearchPane();
 		addAdminPane();	
