@@ -5,9 +5,9 @@ import java.util.*;
 
 public class FileDatabase {
 	static private Connection con;
-	static String[] columns = new String[] {"id", "fileName"};
-	static String[] dataType = new String[] {"integer", "varchar(50)"};;
-	static String tableName= "thePile";
+	static final String[] columns = new String[] {"id", "fileName"};
+	static final String[] dataType = new String[] {"integer", "varchar(50)"};;
+	static final String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
