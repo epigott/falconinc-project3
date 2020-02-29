@@ -238,13 +238,13 @@ CardLayout cl_centerPane, cl_prime;
 		 model.addColumn("Name");
 		 
 		 fileInfo[0] = ("1");
-		 fileInfo[1] = ("Bulbasasaur");
+		 fileInfo[1] = ("Pokemon\\Bulbasasaur.mon");
 		 model.addRow(fileInfo);
 		 fileInfo[0] = ("2");
-		 fileInfo[1] = ("Charmander");
+		 fileInfo[1] = ("Pokemon\\Charmander.mon");
 		 model.addRow(fileInfo);
 		 fileInfo[0] = ("3");
-		 fileInfo[1] = ("Squirtle");
+		 fileInfo[1] = ("Pokemin\\Squirtle.mon");
 		 model.addRow(fileInfo);
 		 //----------------------------------------------=
 		

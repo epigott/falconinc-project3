@@ -58,7 +58,7 @@ public class FileDatabase {
 	
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
 
-		String[] returnArray = {"4","Pikachu"};
+		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
 		
 		return returnArray;
 	 }	
