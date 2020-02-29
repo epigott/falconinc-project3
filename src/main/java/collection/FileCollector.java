@@ -7,7 +7,7 @@ import data.FileDatabase;
 public class FileCollector {
 	
 	public static String[] collectFileInfo() {
-		String[] fileInfo = {"4","Pikachu"};
+		String[] fileInfo = {"Pokemon\\Pikachu.mon"};
 		return fileInfo;
 	}
 	
