@@ -5,8 +5,8 @@ import java.util.*;
 
 public class FileDatabase {
 	static private Connection con;
-	static final String[] columns = new String[] {"id", "fileName"};
-	static final String[] dataType = new String[] {"integer", "varchar(50)"};;
+	static final String[] columns = new String[] {"id", "fileName", "dateModified"};
+	static final String[] dataType = new String[] {"integer", "varchar(50)", "date"};
 	static final String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
@@ -41,7 +41,6 @@ public class FileDatabase {
 			Statement state2 = con.createStatement();
 			state2.execute(sql);
 		}
-		
 	}
 
 
@@ -51,7 +50,24 @@ public class FileDatabase {
 	
 
 	static public String[][] getDatabase() throws SQLException {
-		String[][] returnArray = new String[10][3];
+
+		Statement state = con.createStatement();
+		ResultSet res = state.executeQuery("SELECT * FROM " + tableName);
+		Statement state2 = con.createStatement();
+		ResultSet resCount = state2.executeQuery("SELECT COUNT (*) FROM " + tableName);	
+		
+		int rowCount = 0;
+		if (resCount.next()) {
+		  rowCount = resCount.getInt(1);
+		}
+		
+		String[][] returnArray = new String[rowCount][columns.length];
+		for(int x = 0; x < rowCount ; ++x) {	
+			res.next();
+			for(int y = 0; y < columns.length; ++y ) {
+				returnArray[x][y] = (res.getString(columns[y]));
+			}
+		}
 		return returnArray;
 	}
 	
