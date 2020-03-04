@@ -233,20 +233,12 @@ CardLayout cl_centerPane, cl_prime;
 		 
 		 fileList = new JTable();
 		 fileList.setModel(model);
-		 //----------------test code---------------------
+		 
 		 model.addColumn("id");
 		 model.addColumn("Name");
+		 model.addColumn("date");
+		 updateTable(model);
 		 
-		 fileInfo[0] = ("1");
-		 fileInfo[1] = ("Pokemon\\Bulbasasaur.mon");
-		 model.addRow(fileInfo);
-		 fileInfo[0] = ("2");
-		 fileInfo[1] = ("Pokemon\\Charmander.mon");
-		 model.addRow(fileInfo);
-		 fileInfo[0] = ("3");
-		 fileInfo[1] = ("Pokemin\\Squirtle.mon");
-		 model.addRow(fileInfo);
-		 //----------------------------------------------=
 		
 		JButton b_add = new JButton("Add");
 		b_add.addActionListener(new ActionListener(){
@@ -254,7 +246,7 @@ CardLayout cl_centerPane, cl_prime;
 				
 				try {
 					FileCollector.addFile();
-					model.addRow(FileDatabase.getRow(1));
+					updateTable(model);
 					
 				} catch (IllegalArgumentException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -267,8 +259,11 @@ CardLayout cl_centerPane, cl_prime;
 		b_delete.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int index = fileList.getSelectedRow();
+				//If you dont have a row selected index equals -1
 				if(index != -1) {
-				model.removeRow(index);		
+				
+					
+					updateTable(model);						
 				}
 			}
 		});		
@@ -289,6 +284,28 @@ CardLayout cl_centerPane, cl_prime;
 		p_centerPanel.add(p_admin, "admin");
 	}
 	
+	private void updateTable(DefaultTableModel model) {
+		
+		model.setRowCount(0);
+		String[][] fileInfo;
+		
+		try {
+			fileInfo = FileDatabase.getDatabase() ;		
+			
+			
+			for(int x = 0 ; x < fileInfo.length ; ++x) {
+				String[] rowArray = new String[fileInfo[x].length];
+				for(int y = 0; y < fileInfo[x].length ; ++y) {
+					rowArray[y] = fileInfo[x][y];				
+				}
+				model.addRow(rowArray);
+			}		
+		 }							
+		 catch (SQLException e) {
+			e.printStackTrace();
+		 }
+	}
+
 	public void actionPerformed(ActionEvent e){
 		//Home Button
 		if (e.getSource() == b_home ) {
