@@ -181,7 +181,7 @@ CardLayout cl_centerPane, cl_prime;
 		andSearch.setBackground(barColor);
 		orSearch = new JRadioButton("or" , false);
 		orSearch.setBackground(barColor);
-		exactSearch = new JRadioButton("exact" , false);
+		exactSearch = new JRadioButton("Exact Phrase" , false);
 		exactSearch.setBackground(barColor);
 		searchOption.add(andSearch);
 		searchOption.add(orSearch);
@@ -253,7 +253,7 @@ CardLayout cl_centerPane, cl_prime;
 			public void actionPerformed(ActionEvent e){
 				
 				try {
-					FileCollector.addFile();
+					FileCollector.addFile(); // method called here!
 					model.addRow(FileDatabase.getRow(1));
 					
 				} catch (IllegalArgumentException | SQLException e1) {

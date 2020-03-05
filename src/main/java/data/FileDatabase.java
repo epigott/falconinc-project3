@@ -3,11 +3,12 @@ package data;
 import java.sql.*;
 import java.util.*;
 
+
 public class FileDatabase {
 	static private Connection con;
-	static String[] columns = new String[] {"id", "fileName"};
-	static String[] dataType = new String[] {"integer", "varchar(50)"};;
-	static String tableName= "thePile";
+	static final String[] columns = new String[] {"id", "fileName", "dateModified"};
+	static final String[] dataType = new String[] {"integer", "varchar(50)", "date"};
+	static final String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
@@ -44,9 +45,17 @@ public class FileDatabase {
 		
 	}
 
-
-	static public void addFile(String[] fileInfo) throws SQLException {
-		
+        // plan on reseting param "fileInfo" to a single String rather than an array.
+        // I'll keep it an array if it's necessary.
+	static public void addFile(String[] fileInfo) throws SQLException { 
+		// My Assigned method
+                
+                // insert data into table
+                String insertFile = "INSERT into thePile(fileName, dateModified) Value("+ fileInfo +", date('now'))";
+                PreparedStatement pstmt = con.prepareStatement(insertFile);
+                //pstmt.setString(1,fileInfo); // may need modifications
+                pstmt.executeUpdate();
+                
 	}	
 	
 
