@@ -12,7 +12,7 @@ public class FileCollector {
 	}
 	
 	public static void addFile() throws SQLException {
-		String[] fileInfo = collectFileInfo();
+		String[] fileInfo = collectFileInfo();// changed from String[] to String
 		FileDatabase.addFile(fileInfo);
 	}
 	

@@ -2,6 +2,7 @@ package data;
 
 import java.sql.*;
 import java.util.*;
+import javax.swing.*; // swing imported for testing purposes
 
 
 public class FileDatabase {
@@ -45,17 +46,14 @@ public class FileDatabase {
 		
 	}
 
-        // plan on reseting param "fileInfo" to a single String rather than an array.
-        // I'll keep it an array if it's necessary.
+        // switched back to original design 
 	static public void addFile(String[] fileInfo) throws SQLException { 
 		// My Assigned method
                 
-                // insert data into table
-                String insertFile = "INSERT into thePile(fileName, dateModified) Value("+ fileInfo +", date('now'))";
-                PreparedStatement pstmt = con.prepareStatement(insertFile);
-                //pstmt.setString(1,fileInfo); // may need modifications
-                pstmt.executeUpdate();
+                //test message below
+                JOptionPane.showMessageDialog(null, "passed through addFile()");
                 
+                           
 	}	
 	
 
