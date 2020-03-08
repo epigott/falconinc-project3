@@ -3,6 +3,7 @@ package data;
 import java.sql.*;
 import java.util.*;
 import javax.swing.*; // swing imported for testing purposes
+import java.io.File;  // for test code in addFile() 
 
 
 public class FileDatabase {
@@ -46,13 +47,24 @@ public class FileDatabase {
 		
 	}
 
-        // switched back to original design 
+        // Method I'm working on
 	static public void addFile(String[] fileInfo) throws SQLException { 
-		// My Assigned method
-                
-                //test message below
-                JOptionPane.showMessageDialog(null, "passed through addFile()");
-                
+               
+                // test code below!!!
+                SwingUtilities.invokeLater( new Runnable() {
+                        public void run () {
+                            // created fileChooser to navigate file system
+                            JFileChooser fileChooser = new JFileChooser();
+                            int status = fileChooser.showOpenDialog( null );
+                            if ( status == JFileChooser.APPROVE_OPTION ) {
+                                File addedFile = fileChooser.getSelectedFile();                                
+                                // prints out file added as a message for testing
+                                JOptionPane.showMessageDialog(null,"Added File: " 
+                                        + addedFile.getParent()+ "\\" + addedFile.getName() );
+                            }
+                            
+                        }
+                } );
                            
 	}	
 	
@@ -62,7 +74,7 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
-	
+	// test method?
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
 
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};

@@ -248,13 +248,14 @@ CardLayout cl_centerPane, cl_prime;
 		 model.addRow(fileInfo);
 		 //----------------------------------------------=
 		
-		JButton b_add = new JButton("Add");
+		JButton b_add = new JButton("Add");//add button connected to addFile()
 		b_add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
 				try {
 					FileCollector.addFile(); // method called here!
 					model.addRow(FileDatabase.getRow(1));
+                                        
 					
 				} catch (IllegalArgumentException | SQLException e1) {
 					// TODO Auto-generated catch block
