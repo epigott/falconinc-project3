@@ -50,9 +50,16 @@ public class FileDatabase {
         // Method I'm working on
 	static public void addFile(String[] fileInfo) throws SQLException { 
                
-                // test code below!!!
                 SwingUtilities.invokeLater( new Runnable() {
                         public void run () {
+                            try{
+                                // UIManager gives fileChooser the look and feel of the users system. 
+                                UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+                            }
+                            catch (Exception e){
+                                JOptionPane.showMessageDialog(null, "Error with UIManager");
+                            }
+                            
                             // created fileChooser to navigate file system
                             JFileChooser fileChooser = new JFileChooser();
                             int status = fileChooser.showOpenDialog( null );
