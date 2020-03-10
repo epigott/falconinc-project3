@@ -9,7 +9,9 @@ import java.io.File;  // for test code in addFile()
 public class FileDatabase {
 	static private Connection con;
 	static final String[] columns = new String[] {"id", "fileName", "dateModified"};
-	static final String[] dataType = new String[] {"integer", "varchar(50)", "date"};
+        
+        // USED AUTOINCREMENT ON DATATYPE id
+	static final String[] dataType = new String[] {"integer AUTOINCREMENT", "varchar(50)", "date"};
 	static final String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
@@ -49,25 +51,39 @@ public class FileDatabase {
 
         // Method I'm working on
 	static public void addFile(String[] fileInfo) throws SQLException { 
-               
+
                 SwingUtilities.invokeLater( new Runnable() {
                         public void run () {
                             try{
-                                // UIManager gives fileChooser the look and feel of the users system. 
+                                // UIManager gives fileChooser the look and feel of the  users system. 
                                 UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
                             }
                             catch (Exception e){
-                                JOptionPane.showMessageDialog(null, "Error with UIManager");
+                                JOptionPane.showMessageDialog(null, e.getMessage());
                             }
                             
                             // created fileChooser to navigate file system
                             JFileChooser fileChooser = new JFileChooser();
                             int status = fileChooser.showOpenDialog( null );
                             if ( status == JFileChooser.APPROVE_OPTION ) {
-                                File addedFile = fileChooser.getSelectedFile();                                
+                                File addedFile = fileChooser.getSelectedFile();     
+                                
+                                // var to store the filepath of selected file. 
+                                String filePath = addedFile.getParent() + "\\" +
+                                        addedFile.getName();
+                                
                                 // prints out file added as a message for testing
-                                JOptionPane.showMessageDialog(null,"Added File: " 
-                                        + addedFile.getParent()+ "\\" + addedFile.getName() );
+                                JOptionPane.showMessageDialog(null,"Added File: " + 
+                                        filePath );
+                                
+                                /*
+                                TODO: write logic to insert filepath into data
+                                along with date modified and id number
+                                */
+                                
+                                // create new record
+                                String newRec = "INSERT INTO "+ tableName 
+                                        +"("+ filePath +", date('now')) VALUES(fileName, date)";
                             }
                             
                         }
@@ -81,7 +97,7 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
-	// test method?
+
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
 
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
