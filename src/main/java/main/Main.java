@@ -11,9 +11,6 @@ import data.FileDatabase;
 import collection.FileCollector;
 import collection.SearchEngine;
 
-import org.kordamp.ikonli.materialdesign.MaterialDesign;
-import org.kordamp.ikonli.swing.FontIcon;
-
 public class Main extends JFrame implements ActionListener{
 	
 
@@ -113,12 +110,10 @@ CardLayout cl_centerPane, cl_prime;
 		p_homeCenter.add(p_homeCenterBot, gbc);
 
 		
-		FontIcon searchIcon = FontIcon.of(MaterialDesign.MDI_MAGNIFY);
-		b_search_h = new JButton(searchIcon);
+		b_search_h = new JButton("Search");
 		b_search_h.addActionListener(this);	
 		
-		FontIcon adminIcon = FontIcon.of(MaterialDesign.MDI_FORMAT_LIST_BULLETED);
-		b_admin_h = new JButton(adminIcon);
+		b_admin_h = new JButton("Admin");
 		b_admin_h.addActionListener(this);
 		
 		JLabel l_banner = new JLabel("Falcon Engine");	
@@ -163,16 +158,13 @@ CardLayout cl_centerPane, cl_prime;
 		p_barTop.setBackground(barColor);
 		p_barBot.setBackground(barColor);
 		
-		FontIcon homeIcon = FontIcon.of(MaterialDesign.MDI_HOME_OUTLINE);
-		b_home = new JButton(homeIcon);
+		b_home = new JButton("Home");
 		b_home.addActionListener(this);		
 		
-		FontIcon searchIcon = FontIcon.of(MaterialDesign.MDI_MAGNIFY);
-		b_search = new JButton(searchIcon);
+		b_search = new JButton("Search");
 		b_search.addActionListener(this);	
 		
-		FontIcon adminIcon = FontIcon.of(MaterialDesign.MDI_FORMAT_LIST_BULLETED);
-		b_admin = new JButton(adminIcon);
+		b_admin = new JButton("Admin");
 		b_admin.addActionListener(this);
 		
 		ButtonGroup searchOption = new ButtonGroup();
