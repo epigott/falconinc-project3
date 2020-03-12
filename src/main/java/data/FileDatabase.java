@@ -2,8 +2,8 @@ package data;
 
 import java.sql.*;
 import java.util.*;
-import javax.swing.*; // swing imported for testing purposes
-import java.io.File;  // for test code in addFile() 
+import javax.swing.*; // swing imported for JOptionPane messages in addFile()
+import java.io.File;  // for code in addFile() 
 
 
 public class FileDatabase {
@@ -81,9 +81,20 @@ public class FileDatabase {
                                 along with date modified and id number
                                 */
                                 
-                                // create new record
+                                // creates new record
                                 String newRec = "INSERT INTO "+ tableName 
                                         +"("+ filePath +", date('now')) VALUES(fileName, date)";
+                                
+                                // inserts new record into database
+                                // still working out bugs!
+                                try{
+                                    PreparedStatement pStmt = con.prepareStatement(newRec);
+                                    pStmt.setString(1, filePath);
+                                    pStmt.executeUpdate();
+                                }
+                                catch(Exception e){
+                                    JOptionPane.showMessageDialog(null, e.getMessage());
+                                }
                             }
                             
                         }
