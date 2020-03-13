@@ -81,20 +81,20 @@ public class FileDatabase {
                                 along with date modified and id number
                                 */
                                 
-                                // creates new record
-                                String newRec = "INSERT INTO "+ tableName 
-                                        +"("+ filePath +", date('now')) VALUES(fileName, date)";
-                                
-                                // inserts new record into database
-                                // still working out bugs!
-                                try{
-                                    PreparedStatement pStmt = con.prepareStatement(newRec);
-                                    pStmt.setString(1, filePath);
-                                    pStmt.executeUpdate();
-                                }
-                                catch(Exception e){
+                                // create new record
+                                String newRec = "INSERT INTO "+ tableName +
+                                        " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+  
+                                Statement state;
+                                try {
+                                    state = con.createStatement();
+                                    state.execute(newRec);
+                                } catch (SQLException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
                                     JOptionPane.showMessageDialog(null, e.getMessage());
                                 }
+                                
                             }
                             
                         }
