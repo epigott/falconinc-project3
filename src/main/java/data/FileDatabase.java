@@ -9,9 +9,7 @@ import java.io.File;  // for code in addFile()
 public class FileDatabase {
 	static private Connection con;
 	static final String[] columns = new String[] {"id", "fileName", "dateModified"};
-        
-        // USED AUTOINCREMENT ON DATATYPE id
-	static final String[] dataType = new String[] {"integer AUTOINCREMENT", "varchar(50)", "date"};
+	static final String[] dataType = new String[] {"integer", "varchar(50)", "date"};
 	static final String tableName= "thePile";
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
