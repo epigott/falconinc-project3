@@ -49,7 +49,6 @@ ImageIcon icon;
 		// The Primary Panel that Contains all Panels
 		cl_prime = new CardLayout();
 		p_prime = new JPanel(cl_prime);
-		p_prime.setVisible(true);
 		add(p_prime);
 			
 		//Creating MainPages
@@ -66,26 +65,35 @@ ImageIcon icon;
 	private void addHomePane() {
 	 	p_home = new JPanel(new BorderLayout());
 		Color pageColor = Color.lightGray;
-	 	p_home.setVisible(true);
+		
+		tf_searchBar_h = new JTextField(20);
+		ButtonGroup searchOption = new ButtonGroup();	
+		andSearch_h = new JRadioButton("and" , true);
+		orSearch_h = new JRadioButton("or" , false);
+		exactSearch_h = new JRadioButton("exact" , false);
 	 	
-	 	p_homeBot = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	 	p_homeBot.setBackground(pageColor);
-	 	
+		//Creating SubPanels
+	 	p_homeBot = new JPanel(new FlowLayout(FlowLayout.RIGHT));	
 	 	p_homeCenter = new JPanel(new GridBagLayout());
-	 	p_homeCenter.setBackground(pageColor);
-	 	GridBagConstraints gbc = new GridBagConstraints();
-	 	
-	 	p_homeCenterTop = new JPanel();
-	 	p_homeCenterTop.setBackground(pageColor);
-	 	
-	 	p_homeCenterMid= new JPanel();
-	 	p_homeCenterMid.setBackground(pageColor);
-	 	
-	 	p_homeCenterBot = new JPanel();
-	 	p_homeCenterBot.setBackground(pageColor);
-	 	
+	 	GridBagConstraints gbc = new GridBagConstraints();	 	
+	 	p_homeCenterTop = new JPanel(); 	
+	 	p_homeCenterMid= new JPanel();	
+	 	p_homeCenterBot = new JPanel();	
 		p_home.add(p_homeBot, BorderLayout.PAGE_END);
 		p_home.add(p_homeCenter, BorderLayout.CENTER);	
+		
+	 	p_homeBot.setBackground(pageColor); 
+	 	p_homeCenter.setBackground(pageColor);
+	 	p_homeCenterTop.setBackground(pageColor);	
+	 	p_homeCenterMid.setBackground(pageColor); 
+	 	p_homeCenterBot.setBackground(pageColor);
+		andSearch_h.setBackground(pageColor);
+		orSearch_h.setBackground(pageColor);
+		exactSearch_h.setBackground(pageColor);
+	 	
+		JLabel l_banner = new JLabel("Falcon Engine");	
+		Font font = new Font("SanSerif" , Font.PLAIN , 30);
+		l_banner.setFont(font);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -95,24 +103,9 @@ ImageIcon icon;
 		gbc.gridy = 2;
 		p_homeCenter.add(p_homeCenterBot, gbc);
 		
-		b_admin_h = new JButton();
-		b_search_h = new JButton();
-		createSearchButton(b_search_h);
-		createAdminButton(b_admin_h);
-		
-		JLabel l_banner = new JLabel("Falcon Engine");	
-		Font font = new Font("SanSerif" , Font.PLAIN , 30);
-		l_banner.setFont(font);
-		
-		tf_searchBar_h = new JTextField(20);
+		b_search_h = createSearchButton();
+		b_admin_h =createSearchButton();
 
-		ButtonGroup searchOption = new ButtonGroup();	
-		andSearch_h = new JRadioButton("and" , true);
-		andSearch_h.setBackground(pageColor);
-		orSearch_h = new JRadioButton("or" , false);
-		orSearch_h.setBackground(pageColor);
-		exactSearch_h = new JRadioButton("exact" , false);
-		exactSearch_h.setBackground(pageColor);
 		searchOption.add(andSearch_h);
 		searchOption.add(orSearch_h);
 		searchOption.add(exactSearch_h);
@@ -132,8 +125,7 @@ ImageIcon icon;
 	
 	private void addMainPane() {
 		p_main = new JPanel(new BorderLayout());
-		p_main.setBackground(Color.white);
-		p_main.setVisible(true);	
+		p_main.setBackground(Color.white);	
 		
 		//Create SubPanes
 		addBarPane();
@@ -156,20 +148,23 @@ ImageIcon icon;
 
 	private void addBarPane(){
 		p_bar = new JPanel(new BorderLayout());
+		
+		//Initializing Fields
 		p_barTop = new JPanel();
 		p_barBot = new JPanel();
+		
+		//Adding SubPanels
 		p_bar.add(p_barTop, BorderLayout.PAGE_START);
 		p_bar.add(p_barBot, BorderLayout.PAGE_END);
 		
+		//Setting BG Color 
 		Color barColor = Color.lightGray;
 		p_barTop.setBackground(barColor);
 		p_barBot.setBackground(barColor);
-		b_home = new JButton();
-		b_admin = new JButton();
-		b_search = new JButton();
-		createHomeButton(b_home);
-		createSearchButton(b_search);		
-		createAdminButton(b_admin);
+			
+		b_home = createHomeButton();
+		b_search = createSearchButton();		
+		b_admin = createAdminButton();
 		
 		ButtonGroup searchOption = new ButtonGroup();
 		
@@ -198,8 +193,6 @@ ImageIcon icon;
 			
 	}
 
-
-
 	private void addSearchPane(){
 		p_searchResults = new JPanel();
 		p_searchResults.setBackground(Color.white);
@@ -211,29 +204,22 @@ ImageIcon icon;
 	
 	private void addAdminPane(){
 		p_admin = new JPanel(new BorderLayout());
-        p_admin.setBackground(Color.white);
 		p_adminTop = new JPanel();
-		p_adminTop.setBackground(Color.white);
 		p_adminCenter = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		p_adminCenter.getViewport().setBackground(Color.white);
 		p_adminBot = new JPanel();
-		p_adminBot.setBackground(Color.LIGHT_GRAY);
-        						
-		JLabel l_banner_a = new JLabel("File List");
-		
-		 fileInfo= new String[2];
-		 model = new DefaultTableModel();
-		 
-		 fileList = new JTable();
-		 fileList.setModel(model);
-		 
-		 model.addColumn("id");
-		 model.addColumn("Name");
-		 model.addColumn("date");
-		 updateTable(model);
-		 
 		b_add = new JButton();
 		b_delete = new JButton();
+		fileList = new JTable();	
+		JLabel l_banner_a = new JLabel("File List");
+		
+		Color adminColor = Color.white;
+		p_adminCenter.getViewport().setBackground(adminColor);
+		p_adminTop.setBackground(adminColor);
+        p_admin.setBackground(adminColor);
+		p_adminBot.setBackground(adminColor);	 
+
+		createFileTable(fileList);
+		 
 		createAddButton(b_add);		
 		createDeleteButton(b_delete);
 		
@@ -249,6 +235,15 @@ ImageIcon icon;
 		p_admin.add(p_adminBot, BorderLayout.PAGE_END);
 	}
 
+	private void createFileTable(JTable table) {
+		model = new DefaultTableModel();
+		model.addColumn("id");
+		model.addColumn("Name");
+		model.addColumn("date");
+		table.setModel(model);
+		updateTable(model);
+	}
+	
 	private void updateTable(DefaultTableModel model) {
 		
 		model.setRowCount(0);
@@ -269,7 +264,8 @@ ImageIcon icon;
 		 }
 	}
 	
-	private void createHomeButton(JButton button) {
+	private JButton createHomeButton() {
+		JButton button = new JButton();
 		FontIcon homeIcon = FontIcon.of(MaterialDesign.MDI_HOME_OUTLINE);
 		button.setIcon(homeIcon);
 		button.addActionListener(new ActionListener(){
@@ -278,9 +274,11 @@ ImageIcon icon;
 				cl_prime.show(p_prime, "home");
 				}					
 		});			
+		return button;
 	}
 	
-	private void createSearchButton(JButton button) {
+	private JButton createSearchButton() {
+		JButton button = new JButton();
 		FontIcon searchIcon = FontIcon.of(MaterialDesign.MDI_MAGNIFY);
 		button.setIcon(searchIcon);
 		button.addActionListener(new ActionListener(){
@@ -315,9 +313,11 @@ ImageIcon icon;
 					cl_centerPane.show(p_centerPanel, "search");
 				}					
 		});	
+		return button;
 	}
 	
-	private void createAdminButton(JButton button) {
+	private JButton createAdminButton() {
+		JButton button = new JButton();
 		FontIcon adminIcon = FontIcon.of(MaterialDesign.MDI_FORMAT_LIST_BULLETED);
 		button.setIcon(adminIcon);
 		button.addActionListener(new ActionListener(){
@@ -326,6 +326,7 @@ ImageIcon icon;
 				cl_centerPane.show(p_centerPanel, "admin");
 				}					
 		});			
+		return button;
 	}
 	
 	private void createAddButton(JButton button) {
