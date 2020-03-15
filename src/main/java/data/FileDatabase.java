@@ -47,56 +47,49 @@ public class FileDatabase {
 		
 	}
 
-        // Method I'm working on
+        // Inserts file into database
 	static public void addFile(String[] fileInfo) throws SQLException { 
 
-                SwingUtilities.invokeLater( new Runnable() {
-                        public void run () {
-                            try{
-                                // UIManager gives fileChooser the look and feel of the  users system. 
-                                UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
-                            }
-                            catch (Exception e){
-                                JOptionPane.showMessageDialog(null, e.getMessage());
-                            }
+
+                    try{
+                        // UIManager gives fileChooser the look and feel of the  users system. 
+                        UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+                    }
+                    catch (Exception e){
+                        JOptionPane.showMessageDialog(null, e.getMessage());
+                    }
                             
-                            // created fileChooser to navigate file system
-                            JFileChooser fileChooser = new JFileChooser();
-                            int status = fileChooser.showOpenDialog( null );
-                            if ( status == JFileChooser.APPROVE_OPTION ) {
-                                File addedFile = fileChooser.getSelectedFile();     
+                    // created fileChooser to navigate file system
+                    JFileChooser fileChooser = new JFileChooser();
+                    int status = fileChooser.showOpenDialog( null );
+                    if ( status == JFileChooser.APPROVE_OPTION ) {
+                        File addedFile = fileChooser.getSelectedFile();     
+                        
+                        // var to store the filepath of selected file. 
+                        String filePath = addedFile.getParent() + "\\" +
+                                addedFile.getName();
                                 
-                                // var to store the filepath of selected file. 
-                                String filePath = addedFile.getParent() + "\\" +
-                                        addedFile.getName();
+                        // prints out file added as a message for testing
+                        JOptionPane.showMessageDialog(null,"Added File: " + 
+                                filePath );
+
                                 
-                                // prints out file added as a message for testing
-                                JOptionPane.showMessageDialog(null,"Added File: " + 
-                                        filePath );
-                                
-                                /*
-                                TODO: write logic to insert filepath into data
-                                along with date modified and id number
-                                */
-                                
-                                // create new record
-                                String newRec = "INSERT INTO "+ tableName +
-                                        " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+                        // create new record
+                        String newRec = "INSERT INTO "+ tableName +
+                                " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
   
-                                Statement state;
-                                try {
-                                    state = con.createStatement();
-                                    state.execute(newRec);
-                                } catch (SQLException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                    JOptionPane.showMessageDialog(null, e.getMessage());
-                                }
-                                
-                            }
-                            
+                        Statement state;
+                        try {
+                            state = con.createStatement();
+                            state.execute(newRec);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                            JOptionPane.showMessageDialog(null, e.getMessage());
                         }
-                } );
+                                
+                    }
+                            
                            
 	}	
 	
