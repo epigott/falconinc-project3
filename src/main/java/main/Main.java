@@ -181,7 +181,7 @@ CardLayout cl_centerPane, cl_prime;
 		andSearch.setBackground(barColor);
 		orSearch = new JRadioButton("or" , false);
 		orSearch.setBackground(barColor);
-		exactSearch = new JRadioButton("exact" , false);
+		exactSearch = new JRadioButton("Exact Phrase" , false);
 		exactSearch.setBackground(barColor);
 		searchOption.add(andSearch);
 		searchOption.add(orSearch);
@@ -240,7 +240,7 @@ CardLayout cl_centerPane, cl_prime;
 		 updateTable(model);
 		 
 		
-		JButton b_add = new JButton("Add");
+		JButton b_add = new JButton("Add");//add button connected to addFile()
 		b_add.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				
