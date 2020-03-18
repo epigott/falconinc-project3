@@ -2,6 +2,9 @@ package data;
 
 import java.sql.*;
 import java.util.*;
+import javax.swing.*; // swing imported for JOptionPane messages in addFile()
+import java.io.File;  // for code in addFile() 
+
 
 public class FileDatabase {
 	static private Connection con;
@@ -43,9 +46,50 @@ public class FileDatabase {
 		}
 	}
 
+        // Inserts file into database
+	static public void addFile(String[] fileInfo) throws SQLException { 
 
-	static public void addFile(String[] fileInfo) throws SQLException {
-		
+
+                    try{
+                        // UIManager gives fileChooser the look and feel of the  users system. 
+                        UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+                    }
+                    catch (Exception e){
+                        JOptionPane.showMessageDialog(null, e.getMessage());
+                    }
+                            
+                    // created fileChooser to navigate file system
+                    JFileChooser fileChooser = new JFileChooser();
+                    int status = fileChooser.showOpenDialog( null );
+                    if ( status == JFileChooser.APPROVE_OPTION ) {
+                        File addedFile = fileChooser.getSelectedFile();     
+                        
+                        // var to store the filepath of selected file. 
+                        String filePath = addedFile.getParent() + "\\" +
+                                addedFile.getName();
+                                
+                        // prints out file added as a message for testing
+                        JOptionPane.showMessageDialog(null,"Added File: " + 
+                                filePath );
+
+                                
+                        // create new record
+                        String newRec = "INSERT INTO "+ tableName +
+                                " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+  
+                        Statement state;
+                        try {
+                            state = con.createStatement();
+                            state.execute(newRec);
+                        } catch (SQLException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                            JOptionPane.showMessageDialog(null, e.getMessage());
+                        }
+                                
+                    }
+                            
+                           
 	}	
 	
 
@@ -71,7 +115,7 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
-	
+
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
 
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};

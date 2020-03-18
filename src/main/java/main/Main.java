@@ -189,6 +189,7 @@ ImageIcon icon;
 		andSearch.setBackground(barColor);
 		orSearch.setBackground(barColor);
 		exactSearch.setBackground(barColor);	
+
 		
 		//adding to page
 		p_barTop.add(b_home);
