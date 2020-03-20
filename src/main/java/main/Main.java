@@ -189,7 +189,6 @@ ImageIcon icon;
 		andSearch.setBackground(barColor);
 		orSearch.setBackground(barColor);
 		exactSearch.setBackground(barColor);	
-
 		
 		//adding to page
 		p_barTop.add(b_home);
@@ -197,7 +196,6 @@ ImageIcon icon;
 		p_barTop.add(tf_searchBar_b);		
 		p_barTop.add(b_search);
 		p_barTop.add(b_admin);	
-
 		p_barBot.add(andSearch);
 		p_barBot.add(orSearch);
 		p_barBot.add(exactSearch);

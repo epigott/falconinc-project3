@@ -35,19 +35,6 @@
     	<artifactId>sqlite-jdbc</artifactId>
     	<version>3.30.1</version>
 	</dependency>
-	
-<!-- https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-swing -->
-	<dependency>
-    	<groupId>org.kordamp.ikonli</groupId>
-    	<artifactId>ikonli-swing</artifactId>
-    	<version>11.3.5</version>
-	</dependency>
-	
-    <dependency>
-        <groupId>org.kordamp.ikonli</groupId>
-        <artifactId>ikonli-materialdesign-pack</artifactId>
-        <version>11.3.5</version>
-     </dependency>
         
   </dependencies>
   
