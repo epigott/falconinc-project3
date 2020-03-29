@@ -1,8 +1,6 @@
-package collection;
-
+package main; // package name should be main, not collection
 import java.sql.SQLException;
-
-import data.FileDatabase;
+ 
 
 public class FileCollector {
 	

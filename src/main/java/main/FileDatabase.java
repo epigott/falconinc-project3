@@ -1,4 +1,5 @@
-package data;
+//package data;
+package main; // package name should be main, not data
 
 import java.sql.*;
 import java.util.*;
