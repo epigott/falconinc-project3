@@ -126,6 +126,22 @@ public class FileDatabase {
 	
 	static public void deleteRow(int primaryKey) throws SQLException {
 	
+		String[] returnArray = {" ", " "};
+		Connection con = null;
+		
+		try {
+			con = DriverManager.getConnection("");
+		} catch (SQLException s)
+		{
+			System.out.println(s.getMessage());
+		}
+		return;
+		
+		
+		
+		// To be worked on: ben's suggestion--remove using id, get id from model using: 
+		//getValueAt(int rowIndex,int columnIndex)
+
 	}
 	
 }
