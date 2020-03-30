@@ -136,13 +136,19 @@ public class FileDatabase {
 		String date = "%t";
 		String sql = "DELETE FROM " + tableName + " WHERE id = ? ";
 
+		// create table connection
 		    try (Connection conn = DriverManager.getConnection(id, filename, date); 
-		        Statement stmt = conn.createStatement();) {
-		      
+		        Statement stmt = conn.createStatement();) 
+		    {
+		// create the execute statement for deleting the row from table
 		      stmt.executeUpdate(sql);
 		      System.out.println("Record deleted successfully");
-		    } catch (SQLException e) {
-		      e.printStackTrace();
+		    } 
+		// catch exception if record not deleted successfully    
+		    catch (SQLException e) 
+		    {	
+		      System.out.println ("Record was not deleted successfully! Try again!");
+		      System.out.println(e.getMessage());
 		    }
 		
 		
