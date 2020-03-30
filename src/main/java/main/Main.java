@@ -367,13 +367,21 @@ ImageIcon icon;
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int index = fileList.getSelectedRow();
-				//If you dont have a row selected index equals -1
+				// If you don't have a row selected index equals -1
 				if(index != -1) {
-				//----test code------
 					String id = (model.getValueAt(index, 0).toString());
 					System.out.println(id);
-				//-------------------
+				
+				try {
+				//	Call the deleteRow method from FileDatabase class
+				FileDatabase.deleteRow(index);
 					updateTable(model);						
+				}
+				catch
+				 (IllegalArgumentException | SQLException e1) {
+					// catch any exceptions that may cause an illegal argument 
+					e1.printStackTrace();
+					}
 				}
 			}
 		});			
