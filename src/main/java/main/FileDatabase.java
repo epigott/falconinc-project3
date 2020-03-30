@@ -126,17 +126,29 @@ public class FileDatabase {
 	
 	static public void deleteRow(int primaryKey) throws SQLException {
 	
-		String[] returnArray = {" ", " "};
-		Connection con = null;
-		
-		try {
-			con = DriverManager.getConnection("");
-		} catch (SQLException s)
-		{
-			System.out.println(s.getMessage());
-		}
-		return;
-		
+//		String[] returnArray = {" ", " "};
+//		Connection con = null;
+//		
+//		try {
+//			con = DriverManager.getConnection("");
+//		} catch (SQLException s)
+//		{
+//			System.out.println(s.getMessage());
+//		}
+//		return;
+//		
+		// set variables to select file to delete, from table
+		String table = tableName;
+		String file = "Delete file:";
+
+		    try (Connection conn = DriverManager.getConnection(table); 
+		        Statement stmt = conn.createStatement();) {
+		      
+		      stmt.executeUpdate(file);
+		      System.out.println("Record deleted successfully");
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		    }
 		
 		
 		// To be worked on: ben's suggestion--remove using id, get id from model using: 
