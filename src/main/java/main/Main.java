@@ -371,10 +371,10 @@ ImageIcon icon;
 				if(index != -1) {
 					String id = (model.getValueAt(index, 0).toString());
 					System.out.println(id);
-				
+				// Added by A.Chavan
 				try {
 				//	Call the deleteRow method from FileDatabase class
-				FileDatabase.deleteRow(index);
+				FileDatabase.deleteRow(index);	// index refers to specific file to delete
 					updateTable(model);						
 				}
 				catch

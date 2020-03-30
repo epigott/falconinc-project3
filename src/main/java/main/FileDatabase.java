@@ -125,15 +125,16 @@ public class FileDatabase {
 	
 	
 	static public void deleteRow(int primaryKey) throws SQLException {
-			
+		// Written by A.Chavan	
 		// Source help: https://www.boraji.com/jdbc-delete-record-example
 		// Secondary source help: https://www.sqlitetutorial.net/sqlite-java/delete/
 		
 		// set variables to select file to delete, from table---make connection to table being used
 		// using id #, filename or date of file created
+		
 		String sql = "DELETE FROM " + tableName + " WHERE id = " + primaryKey;
 
-		// create table connection
+		// create table connection with statement variable
 		    try (Statement stmt = con.createStatement();) 
 		    {
 		// create the execute statement for deleting the row from table
