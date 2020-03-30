@@ -151,10 +151,6 @@ public class FileDatabase {
 		      System.out.println(e.getMessage());
 		    }
 		
-		
-		// To be worked on: ben's suggestion--remove using id, get id from model using: 
-		//getValueAt(int rowIndex,int columnIndex)
-
 	}
 	
 }
