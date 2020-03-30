@@ -134,11 +134,11 @@ public class FileDatabase {
 		String id = "%d";
 		String filename = "%s";
 		String date = "%t";
-		String sql = "DELETE FROM " + tableName + " WHERE id = ? ";
+		String sql = "DELETE FROM " + tableName + " WHERE id = " + primaryKey;
 
 		// create table connection
-		    try (Connection conn = DriverManager.getConnection(id, filename, date); 
-		        Statement stmt = conn.createStatement();) 
+		    try (Connection con = DriverManager.getConnection(id, filename, date); 
+		        Statement stmt = con.createStatement();) 
 		    {
 		// create the execute statement for deleting the row from table
 		      stmt.executeUpdate(sql);
