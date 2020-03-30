@@ -138,6 +138,7 @@ public class FileDatabase {
 //		return;
 //		
 		// set variables to select file to delete, from table
+		// Source help: https://www.boraji.com/jdbc-delete-record-example
 		String table = tableName;
 		String file = "Delete file:";
 
