@@ -131,9 +131,6 @@ public class FileDatabase {
 		
 		// set variables to select file to delete, from table---make connection to table being used
 		// using id #, filename or date of file created
-//		String id = "%d";
-//		String filename = "%s";
-//		String date = "%t";
 		String sql = "DELETE FROM " + tableName + " WHERE id = " + primaryKey;
 
 		// create table connection
