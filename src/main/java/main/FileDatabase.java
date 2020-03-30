@@ -1,4 +1,5 @@
-package data;
+//package data;
+package main; // package name should be main, not data
 
 import java.sql.*;
 import java.util.*;
@@ -47,7 +48,7 @@ public class FileDatabase {
 	}
 
         // Inserts file into database
-	static public void addFile(String[] fileInfo) throws SQLException { 
+	static public void addFile() throws SQLException { 
 
 
                     try{
