@@ -137,15 +137,20 @@ public class FileDatabase {
 //		}
 //		return;
 //		
-		// set variables to select file to delete, from table
+		
 		// Source help: https://www.boraji.com/jdbc-delete-record-example
-		String table = tableName;
-		String file = "Delete file:";
+		// Secondary source help: https://www.sqlitetutorial.net/sqlite-java/delete/
+		
+		// set variables to select file to delete, from table
+		String id = "";
+		String filename = "";
+		String date = "";
+		String sql = "DELETE FROM" + tableName + "WHERE ID = ? ";
 
-		    try (Connection conn = DriverManager.getConnection(table); 
+		    try (Connection conn = DriverManager.getConnection(id, filename, date); 
 		        Statement stmt = conn.createStatement();) {
 		      
-		      stmt.executeUpdate(file);
+		      stmt.executeUpdate(sql);
 		      System.out.println("Record deleted successfully");
 		    } catch (SQLException e) {
 		      e.printStackTrace();
