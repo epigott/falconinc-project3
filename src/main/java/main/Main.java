@@ -374,7 +374,7 @@ ImageIcon icon;
 				// Added by A.Chavan
 				try {
 				//	Call the deleteRow method from FileDatabase class
-					FileDatabase.deleteRow(index);	// index refers to specific file to delete
+					FileDatabase.deleteRow(index, id);	// index refers to specific file to delete per ID
 					updateTable(model);						
 				}
 				catch
