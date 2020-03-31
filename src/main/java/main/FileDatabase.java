@@ -124,7 +124,7 @@ public class FileDatabase {
 	 }	
 	
 	
-	static public void deleteRow(int primaryKey, String id) throws SQLException {
+	static public void deleteRow(String primaryKey) throws SQLException {
 		// Written by A.Chavan	
 		// Source help: https://www.boraji.com/jdbc-delete-record-example
 		// Secondary source help: https://www.sqlitetutorial.net/sqlite-java/delete/
