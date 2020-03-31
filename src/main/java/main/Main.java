@@ -360,20 +360,28 @@ ImageIcon icon;
 		});		
 		return button;
 	}
-	
+	// Delete any file according to database store
 	private JButton createDeleteButton() {
 		JButton button = new JButton();
 		button.setText("Remove");
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int index = fileList.getSelectedRow();
-				//If you dont have a row selected index equals -1
+				// If you don't have a row selected index equals -1
 				if(index != -1) {
-				//----test code------
 					String id = (model.getValueAt(index, 0).toString());
 					System.out.println(id);
-				//-------------------
+				// Added by A.Chavan
+				try {
+				//	Call the deleteRow method from FileDatabase class
+					FileDatabase.deleteRow(id);	// index refers to specific file to delete per ID
 					updateTable(model);						
+				}
+				catch
+				 (IllegalArgumentException | SQLException e1) {
+					// catch any exceptions that may cause an illegal argument 
+					e1.printStackTrace();
+					}
 				}
 			}
 		});			
