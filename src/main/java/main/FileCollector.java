@@ -1,8 +1,6 @@
-package main;
-
+package main; // package name should be main, not collection
 import java.sql.SQLException;
-
-import main.FileDatabase;
+ 
 
 public class FileCollector {
 	
@@ -11,10 +9,6 @@ public class FileCollector {
 		return fileInfo;
 	}
 	
-	public static void addFile() throws SQLException {
-		String[] fileInfo = collectFileInfo();
-		FileDatabase.addFile(fileInfo);
-	}
 	
 	public static boolean validFile(){
 		boolean validFile = true;

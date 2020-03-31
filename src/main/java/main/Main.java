@@ -349,7 +349,7 @@ ImageIcon icon;
 			public void actionPerformed(ActionEvent e){
 				
 				try {
-					FileDatabase.addFile(fileInfo);
+					FileDatabase.addFile(); 
 					updateTable(model);	
 					
 				} catch (IllegalArgumentException | SQLException e1) {

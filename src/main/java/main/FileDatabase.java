@@ -49,7 +49,7 @@ public class FileDatabase {
         // Inserts file into database
 	static public void addFile(String[] fileInfo) throws SQLException { 
 		// Written by R. Spangler
-
+    
                     try{
                         // UIManager gives fileChooser the look and feel of the  users system. 
                         UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
