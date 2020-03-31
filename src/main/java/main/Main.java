@@ -360,7 +360,7 @@ ImageIcon icon;
 		});		
 		return button;
 	}
-	
+	// Delete any file according to database store
 	private JButton createDeleteButton() {
 		JButton button = new JButton();
 		button.setText("Remove");

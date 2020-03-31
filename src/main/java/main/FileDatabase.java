@@ -48,7 +48,7 @@ public class FileDatabase {
 
         // Inserts file into database
 	static public void addFile(String[] fileInfo) throws SQLException { 
-
+		// Written by R. Spangler
 
                     try{
                         // UIManager gives fileChooser the look and feel of the  users system. 
@@ -94,7 +94,7 @@ public class FileDatabase {
 	
 
 	static public String[][] getDatabase() throws SQLException {
-
+		// Written by B.Cloud
 		Statement state = con.createStatement();
 		ResultSet res = state.executeQuery("SELECT * FROM " + tableName);
 		Statement state2 = con.createStatement();
@@ -117,7 +117,7 @@ public class FileDatabase {
 	
 
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
-
+		// Written by E. Pigott
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
 		
 		return returnArray;
