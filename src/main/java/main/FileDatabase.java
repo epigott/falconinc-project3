@@ -3,6 +3,9 @@ package main;
 import java.sql.*;
 import java.util.*;
 import javax.swing.*; // swing imported for JOptionPane messages in addFile()
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.io.File;  // for code in addFile() 
 
 
@@ -60,6 +63,9 @@ public class FileDatabase {
                             
                     // created fileChooser to navigate file system
                     JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setAcceptAllFileFilterUsed(false);//removes all file filter
+                    FileFilter filter = new FileNameExtensionFilter("Txt files only","txt");
+                    fileChooser.setFileFilter(filter);//adds filter that only accepts txt docs.
                     int status = fileChooser.showOpenDialog( null );
                     if ( status == JFileChooser.APPROVE_OPTION ) {
                         File addedFile = fileChooser.getSelectedFile();     
