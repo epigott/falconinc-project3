@@ -1,4 +1,4 @@
-package collection;
+package main; // package name should be main, not collection
 
 public class SearchEngine {
 		

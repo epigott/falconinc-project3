@@ -1,8 +1,11 @@
-package data;
+package main;
 
 import java.sql.*;
 import java.util.*;
 import javax.swing.*; // swing imported for JOptionPane messages in addFile()
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.io.File;  // for code in addFile() 
 
 
@@ -47,9 +50,9 @@ public class FileDatabase {
 	}
 
         // Inserts file into database
-	static public void addFile(String[] fileInfo) throws SQLException { 
-
-
+	static public void addFile() throws SQLException { 
+		// Written by R. Spangler
+    
                     try{
                         // UIManager gives fileChooser the look and feel of the  users system. 
                         UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
@@ -60,6 +63,9 @@ public class FileDatabase {
                             
                     // created fileChooser to navigate file system
                     JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setAcceptAllFileFilterUsed(false);//removes all file filter
+                    FileFilter filter = new FileNameExtensionFilter("Txt files only","txt");
+                    fileChooser.setFileFilter(filter);//adds filter that only accepts txt docs.
                     int status = fileChooser.showOpenDialog( null );
                     if ( status == JFileChooser.APPROVE_OPTION ) {
                         File addedFile = fileChooser.getSelectedFile();     
@@ -94,7 +100,7 @@ public class FileDatabase {
 	
 
 	static public String[][] getDatabase() throws SQLException {
-
+		// Written by B.Cloud
 		Statement state = con.createStatement();
 		ResultSet res = state.executeQuery("SELECT * FROM " + tableName);
 		Statement state2 = con.createStatement();
@@ -117,15 +123,37 @@ public class FileDatabase {
 	
 
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
-
+		// Written by E. Pigott
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
 		
 		return returnArray;
 	 }	
 	
 	
-	static public void deleteRow(int primaryKey) throws SQLException {
-	
+	static public void deleteRow(String primaryKey) throws SQLException {
+		// Written by A.Chavan	
+		// Source help: https://www.boraji.com/jdbc-delete-record-example
+		// Secondary source help: https://www.sqlitetutorial.net/sqlite-java/delete/
+		
+		// set variables to select file to delete, from table---make connection to table being used
+		// using id #, filename or date of file created
+		
+		String sql = "DELETE FROM " + tableName + " WHERE id = " + primaryKey;
+
+		// create table connection with statement variable
+		    try (Statement stmt = con.createStatement();) 
+		    {
+		// create the execute statement for deleting the row from table
+		      stmt.executeUpdate(sql);
+		      System.out.println("Record deleted successfully");
+		    } 
+		// catch exception if record not deleted successfully    
+		    catch (SQLException e) 
+		    {	
+		      System.out.println ("Record was not deleted successfully! Try again!");
+		      System.out.println(e.getMessage());
+		    }
+		
 	}
 	
 }
