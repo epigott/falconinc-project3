@@ -1,17 +1,26 @@
-package main; // package name should be main, not collection
-import java.sql.SQLException;
- 
+package main;
 
+ 
 public class FileCollector {
 	
-	public static String[] collectFileInfo() {
-		String[] fileInfo = {"Pokemon\\Pikachu.mon"};
-		return fileInfo;
-	}
-	
-	
+        // checks if file is valid
 	public static boolean validFile(){
 		boolean validFile = true;
 		return validFile;
 	}
+        
+        // or search 
+        public static boolean orSearch() {
+            return true; // stub 
+        }
+        
+        // and search
+        public static boolean andSearch() {
+            return true; // stub
+        }
+        
+        // exact phrase search
+        public static boolean exactPhrase() {
+            return true; // stub
+        }
 }
