@@ -52,8 +52,9 @@ public class SearchEngine {
 		
 		// Method I'm working on
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
-			ArrayList<String> returnArray = query;			
-			return returnArray;
+                        //ArrayList to store and searched files
+			ArrayList<String> andSrchArray = query;			
+			return andSrchArray;
 		}
 		
 		//
