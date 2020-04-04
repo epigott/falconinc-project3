@@ -327,6 +327,7 @@ int searchType;
 						
 					searchReturn = SearchEngine.search(searchType,searchQueary);
 					
+					//Display Results
 					//-----------------test code--------------------
 					String resultDisplay = "<html>";
 					

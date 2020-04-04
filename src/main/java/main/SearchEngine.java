@@ -1,14 +1,17 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SearchEngine {
 	
 		static public Connection con;
 		static String[] columns = new String[] {"id", "fileId", "word", "location"};
-		static String[] dataType = new String[] {"integer", "integer", "varchar(50)", "varchar(50)"};
+		static String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer)"};
 		static String tableName = "theWords";
 	
 		//Create word index table and get connection
@@ -41,19 +44,19 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		// or search
+		//
 		private static ArrayList<String> orSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
 			ArrayList<String> returnArray = query;	
 			return returnArray;
 		}
 		
-		// and search
+		//
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
 			ArrayList<String> returnArray = query;			
 			return returnArray;
 		}
 		
-		// exact phrase search
+		//
 		private static ArrayList<String> exactSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
 			ArrayList<String> returnArray = query;
 			return returnArray;
@@ -63,11 +66,13 @@ public class SearchEngine {
 		private static ArrayList<String> parseQuery(String query) {
 			ArrayList<String> queryList = new ArrayList<String>();
 			
-			queryList.add("It's");
-			queryList.add("Always");
-			queryList.add("Picachu");
-			queryList.add("!!!");
-			
+			Scanner src  = new Scanner(query);				
+				while(src.hasNext() != false) {
+					queryList.add(src.next());
+				}
+				
+			src.close();
+
 			return queryList;
 		}
 		
