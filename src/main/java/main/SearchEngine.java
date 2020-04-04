@@ -72,6 +72,12 @@ public class SearchEngine {
 				}
 				
 			src.close();
+			
+			//--------------------------------
+			for(int x = 0; x < queryList.size(); ++x) {
+				System.out.println(queryList.get(x));
+			}
+			//--------------------------------
 
 			return queryList;
 		}
@@ -80,11 +86,23 @@ public class SearchEngine {
 		private static ArrayList<Integer> validFile(){
 			ArrayList<Integer> validIds = new ArrayList<Integer>();
 			
-			validIds.add(1);
-			validIds.add(2);
-			validIds.add(3);
-			validIds.add(4);
+			String[][] fileInfo;
+			try {
+				fileInfo = FileDatabase.getDatabase() ;		
+						
+				for(int x = 0 ; x < fileInfo.length ; ++x) {
+					validIds.add(Integer.parseInt(fileInfo[x][0]));			
+				}		
+			 }							
+			 catch (SQLException e) {
+				e.printStackTrace();
+			 }
 			
+			//---------------------------------
+			for(int x = 0; x < validIds.size(); ++x) {
+				System.out.println(validIds.get(x));
+			}
+			//--------------------------------
 			return validIds;
 		}
 
