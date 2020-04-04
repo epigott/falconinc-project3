@@ -3,6 +3,8 @@ package main;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +17,7 @@ public class Main extends JFrame {
 		
 		try {
 			FileDatabase.getConnection();
+			SearchEngine.onStart();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,13 +32,14 @@ JPanel  p_prime, p_home, p_main, p_bar, p_barTop, p_barBot, p_centerPanel, p_sea
 JScrollPane  p_adminCenter;
 JTextField tf_searchBar_b, tf_searchBar_h;
 JLabel l_searchResults;
-String searchQueary, searchReturn;
+String searchQueary;
 String[] fileInfo;
 JTable fileList;
 DefaultTableModel model;
 JRadioButton andSearch, orSearch ,exactSearch, andSearch_h, orSearch_h ,exactSearch_h;
 CardLayout cl_centerPane, cl_prime;
 ImageIcon icon;
+int searchType;
 	
 	public Main(){
 		//Set Window Parameters
@@ -189,8 +193,7 @@ ImageIcon icon;
 		andSearch.setBackground(barColor);
 		orSearch.setBackground(barColor);
 		exactSearch.setBackground(barColor);	
-
-		
+	
 		//adding to page
 		p_barTop.add(b_home);
 		p_barTop.add(l_banner);			
@@ -301,6 +304,8 @@ ImageIcon icon;
 		button.setIcon(searchIcon);
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+						ArrayList<String> searchReturn;
+						final int and = 1, or = 2, exact =3;
 				
 						//Do This only If using the home page search			
 						if (!tf_searchBar_h.getText().equals("")) {
@@ -308,20 +313,33 @@ ImageIcon icon;
 							tf_searchBar_h.setText("");
 						}
 						
-						//Always do this.
+						//Always do this. Gets search type.
 						searchQueary = tf_searchBar_b.getText();					
 						if(andSearch.isSelected()) {
-							searchReturn = SearchEngine.andSearch(searchQueary);
-							andSearch_h.setSelected(true);
+							searchType = and;
 						}
 						else if(orSearch.isSelected()){
-							searchReturn = SearchEngine.orSearch(searchQueary);
+							searchType = or;;
 						}
-						else if(exactSearch.isSelected() ){
-							searchReturn = SearchEngine.exactSearch(searchQueary);
-						}			
-					l_searchResults.setText(searchReturn);
-							
+						else if(exactSearch.isSelected()){
+							searchType = exact;
+						}		
+						
+					searchReturn = SearchEngine.search(searchType,searchQueary);
+					
+					//Display Results
+					//-----------------test code--------------------
+					String resultDisplay = "<html>";
+					
+					for (int x = 0; x < searchReturn.size(); ++x)
+					{
+					    resultDisplay += (searchReturn.get(x) + "<br/>");					    
+					}
+					resultDisplay += "</html>";
+					
+					l_searchResults.setText(resultDisplay);
+					//----------------------------------------------
+					
 					cl_prime.show(p_prime, "main");
 					cl_centerPane.show(p_centerPanel, "search");
 				}					

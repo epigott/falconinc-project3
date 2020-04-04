@@ -37,6 +37,13 @@
 	</dependency>
 	
 <!-- https://mvnrepository.com/artifact/org.kordamp.ikonli/ikonli-swing -->
+
+	<dependency>
+    	<groupId>org.kordamp.ikonli</groupId>
+    	<artifactId>ikonli-core</artifactId>
+    	<version>11.3.5</version>
+	</dependency>
+
 	<dependency>
     	<groupId>org.kordamp.ikonli</groupId>
     	<artifactId>ikonli-swing</artifactId>
