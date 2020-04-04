@@ -1,2 +1,2 @@
-# falconinc-project3
-Code for COP 2805C Project 3
+# falconinc-searchengine
+Code for COP 2805C Search Engine (Projects 3 - 5)

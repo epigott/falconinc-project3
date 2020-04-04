@@ -1,13 +1,15 @@
-package data;
+package main;
 
 import java.sql.*;
-import java.util.*;
 import javax.swing.*; // swing imported for JOptionPane messages in addFile()
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.io.File;  // for code in addFile() 
 
 
 public class FileDatabase {
-	static private Connection con;
+	static public Connection con;
 	static final String[] columns = new String[] {"id", "fileName", "dateModified"};
 	static final String[] dataType = new String[] {"integer", "varchar(50)", "date"};
 	static final String tableName= "thePile";
@@ -15,11 +17,11 @@ public class FileDatabase {
 	public static void getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
 		con = DriverManager.getConnection("jdbc:sqlite:TheFilePile.db");
-		initialize();		
+		initialize(tableName, columns, dataType);		
 	}
 
 
-	static private void initialize() throws SQLException {	
+	static public void initialize(String tableName, String[] columns, String[] dataType) throws SQLException {	
 		
 		/*SQLite uses a database to store its databases called sqlite_master.
 		 * Here where looking in that database to find thePile.
@@ -47,54 +49,51 @@ public class FileDatabase {
 	}
 
         // Inserts file into database
-	static public void addFile(String[] fileInfo) throws SQLException { 
-
-
-                    try{
-                        // UIManager gives fileChooser the look and feel of the  users system. 
-                        UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
-                    }
-                    catch (Exception e){
-                        JOptionPane.showMessageDialog(null, e.getMessage());
-                    }
+	static public void addFile() throws SQLException { 
+		// Written by R. Spangler
+		try{
+        // UIManager gives fileChooser the look and feel of the  users system. 
+        UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+        }
+         catch (Exception e){
+        JOptionPane.showMessageDialog(null, e.getMessage());
+        }
                             
-                    // created fileChooser to navigate file system
-                    JFileChooser fileChooser = new JFileChooser();
-                    int status = fileChooser.showOpenDialog( null );
-                    if ( status == JFileChooser.APPROVE_OPTION ) {
-                        File addedFile = fileChooser.getSelectedFile();     
+        // created fileChooser to navigate file system
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);//removes all file filter
+        FileFilter filter = new FileNameExtensionFilter("Txt files only","txt");
+        fileChooser.setFileFilter(filter);//adds filter that only accepts txt docs.
+        int status = fileChooser.showOpenDialog( null );
+        
+        if ( status == JFileChooser.APPROVE_OPTION ) {
+        	File addedFile = fileChooser.getSelectedFile();     
                         
-                        // var to store the filepath of selected file. 
-                        String filePath = addedFile.getParent() + "\\" +
-                                addedFile.getName();
-                                
-                        // prints out file added as a message for testing
-                        JOptionPane.showMessageDialog(null,"Added File: " + 
-                                filePath );
-
-                                
-                        // create new record
-                        String newRec = "INSERT INTO "+ tableName +
-                                " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+            // var to store the filepath of selected file. 
+            String filePath = addedFile.getParent() + "\\" +
+            addedFile.getName();
+                               
+            // prints out file added as a message for testing
+            JOptionPane.showMessageDialog(null,"Added File: " + filePath );
+                           
+           // create new record
+            String newRec = "INSERT INTO "+ tableName + " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
   
-                        Statement state;
-                        try {
-                            state = con.createStatement();
-                            state.execute(newRec);
-                        } catch (SQLException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                            JOptionPane.showMessageDialog(null, e.getMessage());
-                        }
-                                
-                    }
-                            
+            Statement state;
+            	try {
+                     state = con.createStatement();
+                     state.execute(newRec);
+                } catch (SQLException e) {          
+                	e.printStackTrace();
+                	JOptionPane.showMessageDialog(null, e.getMessage());
+                }                        
+         }                        
                            
 	}	
 	
 
 	static public String[][] getDatabase() throws SQLException {
-
+		// Written by B.Cloud
 		Statement state = con.createStatement();
 		ResultSet res = state.executeQuery("SELECT * FROM " + tableName);
 		Statement state2 = con.createStatement();
@@ -117,15 +116,37 @@ public class FileDatabase {
 	
 
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
-
+		// Written by E. Pigott
 		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
 		
 		return returnArray;
 	 }	
 	
 	
-	static public void deleteRow(int primaryKey) throws SQLException {
-	
+	static public void deleteRow(String primaryKey) throws SQLException {
+		// Written by A.Chavan	
+		// Source help: https://www.boraji.com/jdbc-delete-record-example
+		// Secondary source help: https://www.sqlitetutorial.net/sqlite-java/delete/
+		
+		// set variables to select file to delete, from table---make connection to table being used
+		// using id #, filename or date of file created
+		
+		String sql = "DELETE FROM " + tableName + " WHERE id = " + primaryKey;
+
+		// create table connection with statement variable
+		    try (Statement stmt = con.createStatement();) 
+		    {
+		// create the execute statement for deleting the row from table
+		      stmt.executeUpdate(sql);
+		      System.out.println("Record deleted successfully");
+		    } 
+		// catch exception if record not deleted successfully    
+		    catch (SQLException e) 
+		    {	
+		      System.out.println ("Record was not deleted successfully! Try again!");
+		      System.out.println(e.getMessage());
+		    }
+		
 	}
 	
 }
