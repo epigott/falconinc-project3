@@ -50,7 +50,7 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		//
+		// Method I'm working on
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
 			ArrayList<String> returnArray = query;			
 			return returnArray;
