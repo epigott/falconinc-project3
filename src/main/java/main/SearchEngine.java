@@ -3,7 +3,9 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -50,15 +52,26 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		// Method I'm working on
+		// Method I'm working on.
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
-                        //ArrayList to store and searched files
+                        //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
                         
-                        for (int i : validFile){
-                            for (String s : query){
-                               andSrchArray.add(s);
-                            }
+                        // match valid file id's to the queried string.
+                        for (String s : query){
+                            // ToDo: create sql statement.
+                            // fix code below...
+                            // ToDo: create statemet for index
+                            
+                            //create statement for conn
+                           // Statement state = con.createStatement();
+                            
+                            // ToDo: create result
+                            //ResultSet result = state.executeQuery(index);
+                            
+                            // ToDo: create another for loop for result statement.
+                            andSrchArray.add(s);                               
+
                         }
                         
 		        return andSrchArray;
