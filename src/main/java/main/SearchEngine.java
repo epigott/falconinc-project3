@@ -1,7 +1,6 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,20 +26,26 @@ public class SearchEngine {
 		//main access
 		public static ArrayList<String> search(int searchType, String query) {		
 			ArrayList<String> returnArray = new ArrayList<String>();
+			ArrayList<String> searchResults = new ArrayList<String>();
 			final int and = 1, or = 2, exact =3;
 			
 			ArrayList<Integer> validIds = validFile();
 			ArrayList<String> queryList = parseQuery(query);
 			
 			switch(searchType) {		
-				case and: returnArray = andSearch(validIds,queryList);
+				case and: searchResults = andSearch(validIds,queryList);
 					break;
-				case or: returnArray = orSearch(validIds,queryList);
+				case or: searchResults = orSearch(validIds,queryList);
 					break;		
-				case exact: returnArray = exactSearch(validIds,queryList);
+				case exact: searchResults = exactSearch(validIds,queryList);
 					break;
 			}
 			
+			//--------------------------------------
+			for(int x = 0; x < searchResults.size(); ++x) {
+				returnArray.add((searchResults.get(x)).toString());
+			}
+			//--------------------------------------
 			return returnArray;
 		}
 		
@@ -52,13 +57,13 @@ public class SearchEngine {
 		
 		//
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
-			ArrayList<String> returnArray = query;			
+			ArrayList<String> returnArray = query;	
 			return returnArray;
 		}
 		
 		//
 		private static ArrayList<String> exactSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
-			ArrayList<String> returnArray = query;
+			ArrayList<String> returnArray = query;	
 			return returnArray;
 		}
 		
@@ -73,7 +78,7 @@ public class SearchEngine {
 				
 			src.close();
 			
-			//--------------------------------
+			//----debug code-------------
 			for(int x = 0; x < queryList.size(); ++x) {
 				System.out.println(queryList.get(x));
 			}
@@ -85,20 +90,24 @@ public class SearchEngine {
 		// returns list of id's to valid files
 		private static ArrayList<Integer> validFile(){
 			ArrayList<Integer> validIds = new ArrayList<Integer>();
-			
 			String[][] fileInfo;
-			try {
-				fileInfo = FileDatabase.getDatabase() ;		
-						
-				for(int x = 0 ; x < fileInfo.length ; ++x) {
-					validIds.add(Integer.parseInt(fileInfo[x][0]));			
-				}		
-			 }							
-			 catch (SQLException e) {
-				e.printStackTrace();
-			 }
 			
-			//---------------------------------
+			try {
+				fileInfo = FileDatabase.getDatabase() ;			
+			
+				for(int x = 0 ; x < fileInfo.length ; ++x) {				
+					try(FileInputStream file = new FileInputStream(fileInfo[x][1])) {
+					} catch (IOException e) {
+						continue;
+					}
+				
+					System.out.println(fileInfo[x][1]);
+					validIds.add(Integer.parseInt(fileInfo[x][0]));			
+				}	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}					
+			//----debug code-------------
 			for(int x = 0; x < validIds.size(); ++x) {
 				System.out.println(validIds.get(x));
 			}
