@@ -114,14 +114,38 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
+	static public String[][] getRows(int[] primaryKeys) throws SQLException, IllegalArgumentException {
+	  
+	  String[][] returnArray = new String[primaryKeys.length][3];
+	  
+	  int x = 0;
+	  while (x < primaryKeys.length) {
+	    returnArray[x] = getRow(primaryKeys[x]);
+	    x++;
+	  }
+	  return returnArray;
+	}
+	
 
-	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
-		// Written by E. Pigott
-		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
+	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException, IndexOutOfBoundsException {
+	  	  
+	  String sql = "select * from thePile where id = '" + primaryKey + "';";
+	  String[] returnArray = new String[3];
+	  
+	  Statement state = con.createStatement();
+		ResultSet res = state.executeQuery(sql);
+	  
+		Integer id_int = res.getInt(1);
+		String fileName_String = res.getString(2);
+		String dateModified_String = res.getString(3);
+		
+		returnArray[0] = id_int.toString();
+		returnArray[1] = fileName_String.toString();
+		returnArray[2] = dateModified_String.toString();
 		
 		return returnArray;
-	 }	
-	
+				
+	 }
 	
 	static public void deleteRow(String primaryKey) throws SQLException {
 		// Written by A.Chavan	
