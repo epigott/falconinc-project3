@@ -33,7 +33,7 @@ public class SearchEngine {
 			ArrayList<String> queryList = parseQuery(query);
 			
 			switch(searchType) {		
-				case and: returnArray = andSearch(validIds,queryList);
+				case and: returnArray = andSearch(validIds,queryList); //method called here
 					break;
 				case or: returnArray = orSearch(validIds,queryList);
 					break;		
@@ -53,8 +53,15 @@ public class SearchEngine {
 		// Method I'm working on
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
                         //ArrayList to store and searched files
-			ArrayList<String> andSrchArray = query;			
-			return andSrchArray;
+			ArrayList<String> andSrchArray = new ArrayList<String>();
+                        
+                        for (int i : validFile){
+                            for (String s : query){
+                               andSrchArray.add(s);
+                            }
+                        }
+                        
+		        return andSrchArray;
 		}
 		
 		//
