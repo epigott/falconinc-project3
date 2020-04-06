@@ -58,22 +58,29 @@ public class SearchEngine {
 			ArrayList<String> andSrchArray = new ArrayList<String>();
                         // match valid file id's to the queried string.
                         for (String s : query){
+                            try{
+                                // sql statemet for index
+                                String index = "SELECT DISTINCT fileId FROM theWord WHERE word ="+ s +"";
+                                //create statement for conn
+                                Statement state = con.createStatement();
 
-                            // sql statemet for index
-                            String index = "SELECT DISTINCT fileId FROM theWord WHERE word ="+ s +"";
-                            //create statement for conn
-                            Statement state = con.createStatement();
-                            
-                            // create result statement as an array
-                            ResultSet[] result = state.executeQuery(index);
-                            // ToDo: convert ResultSet to String
-                            for (var i : result){
-                                
-                                // ToDo: create another for loop for result statement.
-                                andSrchArray.add(i);                               
+                                // create result statement 
+                                ResultSet result = state.executeQuery(index);
+
+                                // ArrayList to convert ResultSet to String
+                                ArrayList<String> resArray = new ArrayList<>();
+
+                                while(result.next()){
+                                    resArray.add(result.getString(index));
+                                    for (String i : resArray){
+
+                                    andSrchArray.add(i);                               
+                                    }
+                                }                                                                   
+                            }catch(SQLException ex){
+                                System.out.println(ex);
                             }
-                        }
-                        
+                        }                        
 		        return andSrchArray;
 		}
 		
