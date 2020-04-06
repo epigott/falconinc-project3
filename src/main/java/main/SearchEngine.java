@@ -60,7 +60,7 @@ public class SearchEngine {
                         for (String s : query){
                             try{
                                 // sql statemet for index
-                                String index = "SELECT DISTINCT fileId FROM theWord WHERE word ="+ s +"";
+                                String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ="+ s +"";
                                 //create statement for conn
                                 Statement state = con.createStatement();
 
