@@ -35,7 +35,7 @@ public class SearchEngine {
 			ArrayList<String> queryList = parseQuery(query);
 			
 			switch(searchType) {		
-				case and: returnArray = andSearch(validIds,queryList); //method called here
+				case and: returnArray = andSearch(validIds,queryList); 
 					break;
 				case or: returnArray = orSearch(validIds,queryList);
 					break;		
@@ -56,22 +56,22 @@ public class SearchEngine {
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
                         //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
-                        
                         // match valid file id's to the queried string.
                         for (String s : query){
-                            // ToDo: create sql statement.
-                            // fix code below...
-                            // ToDo: create statemet for index
-                            
-                            //create statement for conn
-                           // Statement state = con.createStatement();
-                            
-                            // ToDo: create result
-                            //ResultSet result = state.executeQuery(index);
-                            
-                            // ToDo: create another for loop for result statement.
-                            andSrchArray.add(s);                               
 
+                            // sql statemet for index
+                            String index = "SELECT DISTINCT fileId FROM theWord WHERE word ="+ s +"";
+                            //create statement for conn
+                            Statement state = con.createStatement();
+                            
+                            // create result statement as an array
+                            ResultSet[] result = state.executeQuery(index);
+                            // ToDo: convert ResultSet to String
+                            for (var i : result){
+                                
+                                // ToDo: create another for loop for result statement.
+                                andSrchArray.add(i);                               
+                            }
                         }
                         
 		        return andSrchArray;
