@@ -77,7 +77,7 @@ public class FileDatabase {
             JOptionPane.showMessageDialog(null,"Added File: " + filePath );
                            
            // create new record
-            String newRec = "INSERT INTO "+ tableName + " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+            String newRec = "INSERT INTO "+ tableName + " (fileName, dateModified) VALUES('" + filePath +"', datetime('now'))";
   
             Statement state;
             	try {
