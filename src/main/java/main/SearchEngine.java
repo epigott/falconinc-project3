@@ -54,13 +54,10 @@ public class SearchEngine {
 			//-----------------------------------------
 			
 			//check that all Id's are valid ------------also to be moved to own method
-			for (int x=0 , y=0; x < searchResults.size() && y < validIds.size() ;++x) {
-				System.out.println(searchResults.get(x) + validIds.get(y));
-				if(searchResults.get(x).equals(validIds.get(y))) {
+			for (int x=0 ; x < searchResults.size() ;++x) {
+				if(validIds.contains(searchResults.get(x))) {
 					returnArray.add(searchResults.get(x));
-					++y;
 				}
-				
 			}
 			return returnArray;
 		}
