@@ -56,6 +56,8 @@ public class SearchEngine {
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
                         //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
+                        
+                        
                         // match valid file id's to the queried string.
                         for (String s : query){
                             try{
@@ -73,14 +75,24 @@ public class SearchEngine {
                                 while(result.next()){
                                     resArray.add(result.getString(index));
                                     for (String i : resArray){
-
-                                    andSrchArray.add(i);                               
+                                        if(i != null){
+                                            andSrchArray.add(i); 
+                                        }
+                                        else{
+                                            // returns ",." if no records are found.
+                                            andSrchArray.add(",.");
+                                        }
+                                                                      
                                     }
                                 }                                                                   
                             }catch(SQLException ex){
                                 System.out.println(ex);
+                                
                             }
-                        }                        
+                        }
+                        
+                        
+                        
 		        return andSrchArray;
 		}
 		
