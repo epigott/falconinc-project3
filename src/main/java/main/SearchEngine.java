@@ -17,7 +17,8 @@ public class SearchEngine {
 		static final String[] columns = new String[] {"id", "fileId", "word", "location"};
 		static final String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer)"};
 		static final String tableName = "theWords";
-	
+		static ArrayList<String> validIds;
+		
 		//Create word index table and get connection
 		public static void onStart() {
 			try {
@@ -34,8 +35,7 @@ public class SearchEngine {
 			ArrayList<String> searchResults = new ArrayList<String>();
 			final int and = 1, or = 2, exact =3;
 			
-			//
-			ArrayList<String> validIds = validFile();
+			validateFileIds();
 			ArrayList<String> queryList = parseQuery(query);
 			
 			switch(searchType) {		
@@ -47,18 +47,12 @@ public class SearchEngine {
 					break;
 			}
 			//--------------test-----------------------
-			searchResults = new ArrayList<String>();
 			for(int x = 0; x < 10; ++x) {
 				searchResults.add(Integer.toString(x));
 			}
 			//-----------------------------------------
-			
-			//check that all Id's are valid ------------also to be moved to own method
-			for (int x=0 ; x < searchResults.size() ;++x) {
-				if(validIds.contains(searchResults.get(x))) {
-					returnArray.add(searchResults.get(x));
-				}
-			}
+			//returnArray = validIdCheck(searchResults);
+			returnArray= validIdCheck(searchResults);
 			return returnArray;
 		}
 		
@@ -70,7 +64,7 @@ public class SearchEngine {
 		
 		//
 		private static ArrayList<String> andSearch(ArrayList<String> query) {
-			ArrayList<String> returnArray = query;	
+			ArrayList<String> returnArray = query;	   	
 			return returnArray;
 		}
 		
@@ -101,8 +95,8 @@ public class SearchEngine {
 		}
 		
 		// returns list of id's to valid files
-		private static ArrayList<String> validFile(){
-			ArrayList<String> validIds = new ArrayList<String>();
+		private static void validateFileIds(){
+			validIds = new ArrayList<String>();
 			String[][] fileInfo;
 			
 			try {
@@ -115,7 +109,7 @@ public class SearchEngine {
 						continue;
 					}
 					//make sure index is accurate and up to date
-					validateFile(fileInfo[x][0]);	
+					validateIndex(fileInfo[x][0]);	
 					validIds.add(fileInfo[x][0]);			
 				}	
 			} catch (SQLException e) {
@@ -126,11 +120,23 @@ public class SearchEngine {
 				System.out.println(validIds.get(x) + " Is Valid ID" );
 			}
 			//--------------------------------
-			return validIds;
+		}
+		
+		//check that all Id's are valid
+		private static ArrayList<String> validIdCheck(ArrayList<String> oneArray){
+			ArrayList<String> returnArray =new ArrayList<String>();
+
+			for (int x=0 ; x < oneArray.size() ;++x) {
+				if(validIds.contains(oneArray.get(x))) {
+					returnArray.add(oneArray.get(x));
+				}
+			}
+			
+			return returnArray;
 		}
 
 		//checks if files need to be reindexed
-		private static void validateFile(String id) {
+		private static void validateIndex(String id) {
 			try {			
 				String[] fileInfo = FileDatabase.getRow(Integer.parseInt(id));
 				
