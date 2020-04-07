@@ -99,6 +99,10 @@ public class SearchEngine {
 			validIds = new ArrayList<String>();
 			String[][] fileInfo;
 			
+			/*If the Search result turns up nothing its suppose to return ,.
+				Added to validIds so it doesn't take it out if it see's it. */
+			validIds.add(",.");	
+			
 			try {
 				fileInfo = FileDatabase.getDatabase() ;			
 				
