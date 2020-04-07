@@ -56,8 +56,7 @@ public class SearchEngine {
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
                         //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
-                        
-                        
+                                                
                         // match valid file id's to the queried string.
                         for (String s : query){
                             try{
@@ -71,28 +70,26 @@ public class SearchEngine {
 
                                 // ArrayList to convert ResultSet to String
                                 ArrayList<String> resArray = new ArrayList<>();
-
+                                
+                               // check search to see if its empty or not.
+                               if(!result.next()){
+                                   // returns ",." if no records are found and breaks out of loop.
+                                   andSrchArray.add(",.");
+                                   break;
+                               }
+                                   
+                               
                                 while(result.next()){
                                     resArray.add(result.getString(index));
-                                    for (String i : resArray){
-                                        if(i != null){
-                                            andSrchArray.add(i); 
-                                        }
-                                        else{
-                                            // returns ",." if no records are found.
-                                            andSrchArray.add(",.");
-                                        }
-                                                                      
+                                    for (String i : resArray){                                        
+                                        andSrchArray.add(i);                                                                           
                                     }
                                 }                                                                   
                             }catch(SQLException ex){
                                 System.out.println(ex);
                                 
                             }
-                        }
-                        
-                        
-                        
+                        }                       
 		        return andSrchArray;
 		}
 		
