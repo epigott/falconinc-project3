@@ -81,11 +81,11 @@ public class SearchEngine {
                                if(andSrchArray.contains(null)){
                                    while(result.next()){
                                         resArray.add(result.getString(index));
-                                        for (int x=0 ; x < query.size() ;++x) {
-                                                if(resArray.contains(query.get(x))) {
-                                                        andSrchArray.add(query.get(x));
-                                                }
-                                        }
+                                    }
+                                   for (int x=0 ; x < query.size() ;++x) {
+                                            if(resArray.contains(query.get(x))) {
+                                                    andSrchArray.add(query.get(x));
+                                            }
                                     }
                                }
                                                                                                    
