@@ -77,14 +77,18 @@ public class SearchEngine {
                                    andSrchArray.add(",.");
                                    break;
                                }
-                                   
-                               
-                                while(result.next()){
-                                    resArray.add(result.getString(index));
-                                    for (String i : resArray){                                        
-                                        andSrchArray.add(i);                                                                           
+                               // checks if andSrchArray is empty   
+                               if(andSrchArray.contains(null)){
+                                   while(result.next()){
+                                        resArray.add(result.getString(index));
+                                        for (int x=0 ; x < query.size() ;++x) {
+                                                if(resArray.contains(query.get(x))) {
+                                                        andSrchArray.add(query.get(x));
+                                                }
+                                        }
                                     }
-                                }                                                                   
+                               }
+                                                                                                   
                             }catch(SQLException ex){
                                 System.out.println(ex);
                                 
