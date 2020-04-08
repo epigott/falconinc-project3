@@ -83,7 +83,9 @@ public class SearchEngine {
                                         andSrchArray.add(result.getString(index));
                                     }
                                } else {
-                                   resArray.add(result.getString(index));
+                                   while(result.next()){
+                                       resArray.add(result.getString(index));
+                                   }
                                }
                                
                                for (int x=0 ; x < resArray.size() ;++x) {
