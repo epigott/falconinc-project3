@@ -80,13 +80,15 @@ public class SearchEngine {
                                // checks if andSrchArray is empty   
                                if(andSrchArray.contains(null)){
                                    while(result.next()){
-                                        resArray.add(result.getString(index));
+                                        andSrchArray.add(result.getString(index));
                                     }
+                               } else {
+                                   resArray.add(result.getString(index));
                                }
                                
-                               for (int x=0 ; x < query.size() ;++x) {
-                                    if(resArray.contains(query.get(x))) {
-                                            andSrchArray.add(query.get(x));
+                               for (int x=0 ; x < resArray.size() ;++x) {
+                                    if(andSrchArray.contains(resArray.get(x))) {
+                                            andSrchArray.add(resArray.get(x));
                                     }
                                 }
                                                                                                    
