@@ -52,7 +52,7 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		// Method I'm working on.
+		// Method written by Robert (Alex) Sapngler
 		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
                         //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
