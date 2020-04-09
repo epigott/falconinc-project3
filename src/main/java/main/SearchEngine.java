@@ -56,10 +56,55 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		//
+		// Written by A.Chavan
+		@SuppressWarnings("unused")
 		private static ArrayList<String> orSearch(ArrayList<String> query) {
-			ArrayList<String> returnArray = query;	
-			return returnArray;
+			
+			// Initialize an empty set of matching files
+			ArrayList<String> orSearchArray = new ArrayList<String>();
+			
+			// start of for loop for search query, check for valid fileID
+			for(String s : query ) {
+				
+				// try-catch SQL exception for checking valid queries
+				try {
+					// SQL query for index
+					String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
+					
+					// create connection to index
+					Statement stmt = con.createStatement();
+					
+					// store result statement, once statement executed
+					ResultSet r = stmt.executeQuery(index);
+					
+					// ArrayList to convert ResultSet into string
+					ArrayList<String> rArray = new ArrayList<>();
+					
+					// check to see if result returns empty or not
+					if (r.next()) {
+						//If user inputs no search words, output “ ,.”, for no match, break loop
+						orSearchArray.add(" ,.");
+						break;
+					}
+					// check to see if either file search returns null or not
+					ArrayList<String> resOne = null;
+					ArrayList<String> resTwo = null;
+					
+					// if one search present, return either that is present
+					if (resOne == null ) return resTwo;
+					if (resTwo == null ) return resOne;
+					
+				} 
+				// catch SQL exception for file not valid or present
+				catch (SQLException e) {
+					// TODO Auto-generated catch block
+					// Print error warning
+					e.printStackTrace();
+				}
+				
+		}
+			
+			return orSearchArray;
 		}
 		
 		//
