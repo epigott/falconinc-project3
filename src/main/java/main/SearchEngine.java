@@ -77,8 +77,6 @@ public class SearchEngine {
 					// store result statement, once statement executed
 					ResultSet r = stmt.executeQuery(index);
 					
-					// ArrayList to convert ResultSet into string
-					ArrayList<String> rArray = new ArrayList<>();
 					
 					// check to see if result returns empty or not
 					if (r.next()) {
