@@ -79,7 +79,7 @@ public class SearchEngine {
 					
 					
 					// check to see if result returns empty or not
-					if (r.next()) {
+					if (!r.next()) {
 						//If user inputs no search words, output “ ,.”, for no match, break loop
 						orSearchArray.add(" ,.");
 						break;
@@ -93,7 +93,7 @@ public class SearchEngine {
 					if (resTwo == null ) return resOne;
 					
 				} 
-				// catch SQL exception for file not valid or present
+				// catch SQL exception for file not valid or presentS
 				catch (SQLException e) {
 					// TODO Auto-generated catch block
 					// Print error warning
