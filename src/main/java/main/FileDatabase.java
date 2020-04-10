@@ -77,7 +77,7 @@ public class FileDatabase {
             JOptionPane.showMessageDialog(null,"Added File: " + filePath );
                            
            // create new record
-            String newRec = "INSERT INTO "+ tableName + " (fileName, dateModified) VALUES('" + filePath +"', date('now'))";
+            String newRec = "INSERT INTO "+ tableName + " (fileName, dateModified) VALUES('" + filePath +"', datetime('now'))";
   
             Statement state;
             	try {
@@ -114,7 +114,6 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
-
 	// Written by Eric Pigott
 	// Returns the contents of one or more table records from thePile, matching each primary key provided specified within input array. Will call getRow once for each record.
 	static public String[][] getRows(int[] primaryKeys) throws SQLException, IllegalArgumentException, IndexOutOfBoundsException {
@@ -133,8 +132,8 @@ public class FileDatabase {
 	  return returnArray;
 	  
 	}
-        
-        // Written by Eric Pigott
+	
+	// Written by Eric Pigott
 	// Returns the contents of a table record from thePile, matching primary key specified in parameter. Can be called by itself to return only one record. 
 	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException, IndexOutOfBoundsException {
 	  // Setting query for use in this call.
@@ -161,7 +160,6 @@ public class FileDatabase {
 		return returnArray;
 				
 	 }
-	
 	
 	static public void deleteRow(String primaryKey) throws SQLException {
 		// Written by A.Chavan	

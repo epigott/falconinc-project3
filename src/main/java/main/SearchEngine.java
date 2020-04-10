@@ -1,21 +1,24 @@
 package main;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class SearchEngine {
 	
 		static public Connection con;
-		static String[] columns = new String[] {"id", "fileId", "word", "location"};
-		static String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer)"};
-		static String tableName = "theWords";
-	
+		static final String[] columns = new String[] {"id", "fileId", "word", "location"};
+		static final String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer)"};
+		static final String tableName = "theWords";
+		static ArrayList<String> validIds;
+		
 		//Create word index table and get connection
 		public static void onStart() {
 			try {
@@ -29,31 +32,39 @@ public class SearchEngine {
 		//main access
 		public static ArrayList<String> search(int searchType, String query) {		
 			ArrayList<String> returnArray = new ArrayList<String>();
+			ArrayList<String> searchResults = new ArrayList<String>();
 			final int and = 1, or = 2, exact =3;
 			
-			ArrayList<Integer> validIds = validFile();
+			validateFileIds();
 			ArrayList<String> queryList = parseQuery(query);
 			
 			switch(searchType) {		
-				case and: returnArray = andSearch(validIds,queryList); 
+				case and: searchResults = andSearch(queryList);
 					break;
-				case or: returnArray = orSearch(validIds,queryList);
+				case or: searchResults = orSearch(queryList);
 					break;		
-				case exact: returnArray = exactSearch(validIds,queryList);
+				case exact: searchResults = exactSearch(queryList);
 					break;
 			}
-			
+			//--------------test-----------------------
+			for(int x = 0; x < 10; ++x) {
+				searchResults.add(Integer.toString(x));
+			}
+			//-----------------------------------------
+			//returnArray = validIdCheck(searchResults);
+			returnArray= validIdCheck(searchResults);
 			return returnArray;
 		}
 		
 		//
-		private static ArrayList<String> orSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
+		private static ArrayList<String> orSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = query;	
 			return returnArray;
 		}
 		
+
 		// Method written by Robert (Alex) Sapngler
-		private static ArrayList<String> andSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
+		private static ArrayList<String> andSearch(ArrayList<String> query) {
                         //ArrayList to store and searched files.
 			ArrayList<String> andSrchArray = new ArrayList<String>();
                                                 
@@ -103,8 +114,8 @@ public class SearchEngine {
 		}
 		
 		//
-		private static ArrayList<String> exactSearch(ArrayList<Integer> validFile, ArrayList<String> query) {
-			ArrayList<String> returnArray = query;
+		private static ArrayList<String> exactSearch(ArrayList<String> query) {
+			ArrayList<String> returnArray = query;	
 			return returnArray;
 		}
 		
@@ -121,7 +132,7 @@ public class SearchEngine {
 			
 			//--------------------------------
 			for(int x = 0; x < queryList.size(); ++x) {
-				System.out.println(queryList.get(x));
+				System.out.println("in query "+ queryList.get(x));
 			}
 			//--------------------------------
 
@@ -129,27 +140,82 @@ public class SearchEngine {
 		}
 		
 		// returns list of id's to valid files
-		private static ArrayList<Integer> validFile(){
-			ArrayList<Integer> validIds = new ArrayList<Integer>();
-			
+		private static void validateFileIds(){
+			validIds = new ArrayList<String>();
 			String[][] fileInfo;
-			try {
-				fileInfo = FileDatabase.getDatabase() ;		
-						
-				for(int x = 0 ; x < fileInfo.length ; ++x) {
-					validIds.add(Integer.parseInt(fileInfo[x][0]));			
-				}		
-			 }							
-			 catch (SQLException e) {
-				e.printStackTrace();
-			 }
 			
-			//---------------------------------
+			/*If the Search result turns up nothing its suppose to return ,.
+				Added to validIds so it doesn't take it out if it see's it. */
+			validIds.add(",.");	
+			
+			try {
+				fileInfo = FileDatabase.getDatabase() ;			
+				
+				//checking to see if the files still there
+				for(int x = 0 ; x < fileInfo.length ; ++x) {				
+					try(FileInputStream file = new FileInputStream(fileInfo[x][1])) {
+					} catch (IOException e) {
+						continue;
+					}
+					//make sure index is accurate and up to date
+					validateIndex(fileInfo[x][0]);	
+					validIds.add(fileInfo[x][0]);			
+				}	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}					
+			//--------------------------------
 			for(int x = 0; x < validIds.size(); ++x) {
-				System.out.println(validIds.get(x));
+				System.out.println(validIds.get(x) + " Is Valid ID" );
 			}
 			//--------------------------------
-			return validIds;
+		}
+		
+		//check that all Id's are valid
+		private static ArrayList<String> validIdCheck(ArrayList<String> oneArray){
+			ArrayList<String> returnArray =new ArrayList<String>();
+
+			for (int x=0 ; x < oneArray.size() ;++x) {
+				if(validIds.contains(oneArray.get(x))) {
+					returnArray.add(oneArray.get(x));
+				}
+			}
+			
+			return returnArray;
+		}
+
+		//checks if files need to be reindexed
+		private static void validateIndex(String id) {
+			try {			
+				String[] fileInfo = FileDatabase.getRow(Integer.parseInt(id));
+				
+				//collect dates
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				File file = new File(fileInfo[1]);
+				String dateModified  = dateFormat.format(file.lastModified()); 		
+				String dateIndexed = fileInfo[2];
+				
+				//if dateIndexed is after dateModified
+				if(dateIndexed.compareTo(dateModified) < 0) {
+					//reindex file
+					
+					
+					//update date indexed, this might need to go somewhere else but i made it before i thought about it.
+					//get current time
+					String currentTime  = dateFormat.format(Calendar.getInstance().getTime());
+					
+					//UPDATE thePile SET date = 'current time' WHERE id = id
+					String sql = "UPDATE " + FileDatabase.tableName + " SET " + FileDatabase.columns[2] + " = '" 
+							+ currentTime +"' WHERE " + FileDatabase.columns[0] + "= "+ id;
+					System.out.println(sql);
+					Statement state = con.createStatement();
+					state.execute(sql);
+				}
+				
+			} catch (IllegalArgumentException | SQLException e) {
+				e.printStackTrace();
+			}
+			return;
 		}
 
 }
