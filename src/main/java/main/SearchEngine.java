@@ -47,12 +47,6 @@ public class SearchEngine {
 				case exact: searchResults = exactSearch(queryList);
 					break;
 			}
-			//--------------test-----------------------
-			for(int x = 0; x < 10; ++x) {
-				searchResults.add(Integer.toString(x));
-			}
-			//-----------------------------------------
-
 			returnArray= validIdCheck(searchResults);
 			return returnArray;
 		}
@@ -63,60 +57,113 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-
 		// Method written by Robert (Alex) Sapngler
-		private static ArrayList<String> andSearch(ArrayList<String> query) {
-                        //ArrayList to store and searched files.
-			ArrayList<String> andSrchArray = new ArrayList<String>();
-                                                
-                        // match valid file id's to the queried string.
-                        for (String s : query){
-                            try{
-                                // sql statemet for index
-                                String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
-                                //create statement for conn
-                                Statement state = con.createStatement();
+				private static ArrayList<String> andSearch(ArrayList<String> query) {
+		                        //ArrayList to store and searched files.
+					ArrayList<String> andSrchArray = new ArrayList<String>();
+		                                                
+		                        // match valid file id's to the queried string.
+		                        for (String s : query){
+		                            try{
+		                                // sql statemet for index
+		                                String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
+		                                System.out.println(index);
+		                                //create statement for con
+		                                Statement state = con.createStatement();
 
-                                // create result statement 
-                                ResultSet result = state.executeQuery(index);
+		                                // create result statement 
+		                                ResultSet result = state.executeQuery(index);
 
-                                // ArrayList to convert ResultSet to String
-                                ArrayList<String> resArray = new ArrayList<>();
-                                
-                               // check search to see if its empty or not.
-                               if(!result.next()){
-                                   // returns ",." if no records are found and breaks out of loop.
-                                   andSrchArray.add(",.");
-                                   break;
-                               }
-                               // checks if andSrchArray is empty   
-                               if(andSrchArray.contains(null)){
-                                   while(result.next()){
-                                        andSrchArray.add(result.getString(index));
-                                    }
-                               } else {
-                                   while(result.next()){
-                                       resArray.add(result.getString(index));
-                                   }
-                               }
-                               
-                               for (int x=0 ; x < resArray.size() ;++x) {
-                                    if(andSrchArray.contains(resArray.get(x))) {
-                                            andSrchArray.add(resArray.get(x));
-                                    }
-                                }
-                                                                                                   
-                            }catch(SQLException ex){
-                                System.out.println(ex);
-                                
-                            }
-                        }                       
-		        return andSrchArray;
-		}
+		                                // ArrayList to convert ResultSet to String
+		                                ArrayList<String> resArray = new ArrayList<>();
+		                                
+		                               // check search to see if its empty or not.
+		                               if(!result.next()){
+		                                   // returns ",." if no records are found and breaks out of loop.
+		                                   andSrchArray.add(",.");
+		                                   break;
+		                               }
+		                               // checks if andSrchArray is empty   
+		                               if(andSrchArray.isEmpty()){
+		                                   while(result.next()){
+		                                        andSrchArray.add(result.getString("fileId"));
+		                                    }
+		                               } else {
+		                                   while(result.next()){
+		                                       resArray.add(result.getString("fileId"));
+		                                   }
+		                               
+		                               
+		                                   for (int x=0 ; x < resArray.size() ;++x) {
+		                                    	if(andSrchArray.contains(resArray.get(x))) {
+		                                    		andSrchArray.add(resArray.get(x));
+		                                    	}
+		                                   }
+		                               }                                                                    
+		                            }catch(SQLException ex){
+		                                System.out.println(ex);
+		                                
+		                            }
+		                        }    
+				        return andSrchArray;
+				}
 		
 		//
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = query;	
+			ArrayList<String> firstArray = new ArrayList<String>();
+			
+			try {
+	            String sql1 = "SELECT DISTINCT fileId, location FROM "+ tableName +" WHERE word ='"+ query.get(0) +"'";
+	            Statement state1;
+				state1 = con.createStatement();
+				ResultSet result1 = state1.executeQuery(sql1);
+            
+				if(!result1.next()){
+					returnArray.add(",.");
+					return returnArray;     
+				} else {
+					while(result1.next()){
+						firstArray.add(result1.getString("fileId"));
+					}
+				}
+				for (int x = 1; x < query.size(); x++){
+            	
+					ArrayList<String> resultArray = new ArrayList<String>();
+					// sql 
+					String sql2 = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ query.get(x) +"'";
+					Statement state2;
+					state2 = con.createStatement();
+					ResultSet result2 = state2.executeQuery(sql2);
+				
+					if(!result2.next()){
+						returnArray.add(",.");
+						return returnArray;   
+					}  
+					else {
+						resultArray.add(result2.getString("fileId"));
+					}
+					
+					for(int y = 0; y < firstArray.size(); ++y){                 
+						if(!resultArray.contains(firstArray.get(y))) {
+							firstArray.remove(y);       
+							--y;							
+						}
+					}                 
+				}  
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//Ready return array
+			if(firstArray.equals(null)) {
+				returnArray.add(",.");
+			}
+			else {
+				for(int y = 0; y < firstArray.size(); ++y){
+					returnArray.add(firstArray.get(y));
+				}
+			}
 			return returnArray;
 		}
 		
@@ -132,9 +179,10 @@ public class SearchEngine {
 				
 				//index a file
 				while(src.hasNext()) {
-					word = (src.next());
+					word = formatWord(src.next());
 					//index a word
 					String sql = "INSERT INTO "+ tableName + " (fileId, word, location) VALUES('" + id + "', '" + word + "', '" + ++location + "')";
+					System.out.println(sql);
 					Statement state = con.createStatement();
 					state.execute(sql);
 				}
@@ -162,7 +210,8 @@ public class SearchEngine {
 			
 			Scanner src  = new Scanner(query);				
 				while(src.hasNext() != false) {
-					queryList.add(src.next());
+					String word = formatWord(src.next());
+					queryList.add(word);
 				}
 				
 			src.close();
@@ -176,6 +225,12 @@ public class SearchEngine {
 			return queryList;
 		}
 		
+		//makes everything lower case for more accurate searches
+		private static String formatWord(String word) {
+			String returnString = word.toLowerCase();
+			return returnString;
+		}
+
 		// returns list of id's to valid files
 		private static void validateFileIds(){
 			validIds = new ArrayList<String>();
