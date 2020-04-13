@@ -326,7 +326,6 @@ int searchType;
 						}		
 						
 					searchReturn = SearchEngine.search(searchType,searchQueary);
-					
 					//Display Results
 					//-----------------test code--------------------
 					String resultDisplay = "<html>";
@@ -353,6 +352,7 @@ int searchType;
 		button.setIcon(adminIcon);
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				updateTable(model);
 				cl_prime.show(p_prime, "main");
 				cl_centerPane.show(p_centerPanel, "admin");
 				}					
