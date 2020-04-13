@@ -113,7 +113,6 @@ public class FileDatabase {
 		}
 		return returnArray;
 	}
-	
 
 	// Written by Eric Pigott
 		// Returns the contents of one or more table records from thePile, matching each primary key provided specified within input array. Will call getRow once for each record.
@@ -164,7 +163,6 @@ public class FileDatabase {
 			return returnArray;
 					
 		 }	
-	
 	
 	static public void deleteRow(String primaryKey) throws SQLException {
 		// Written by A.Chavan	
