@@ -24,6 +24,7 @@ public class SearchEngine {
 			try {
 				FileDatabase.initialize(tableName, columns, dataType);
 				con = FileDatabase.con;
+				validateFileIds();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -33,7 +34,7 @@ public class SearchEngine {
 		public static ArrayList<String> search(int searchType, String query) {		
 			ArrayList<String> returnArray = new ArrayList<String>();
 			ArrayList<String> searchResults = new ArrayList<String>();
-			final int and = 1, or = 2, exact =3;
+			final int and = 1, or = 2, exact = 3;
 			
 			validateFileIds();
 			ArrayList<String> queryList = parseQuery(query);
@@ -51,7 +52,7 @@ public class SearchEngine {
 				searchResults.add(Integer.toString(x));
 			}
 			//-----------------------------------------
-			//returnArray = validIdCheck(searchResults);
+
 			returnArray= validIdCheck(searchResults);
 			return returnArray;
 		}
@@ -72,6 +73,42 @@ public class SearchEngine {
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = query;	
 			return returnArray;
+		}
+		
+		private static void indexFile(String id) {
+			try {
+				String word;
+				int location = 0;
+				
+				//get file and set scanner
+				String file[] = FileDatabase.getRow(Integer.parseInt(id));
+				FileInputStream fileInput = new FileInputStream(file[1]);
+				Scanner src  = new Scanner(fileInput);
+				
+				//index a file
+				while(src.hasNext()) {
+					word = (src.next());
+					//index a word
+					String sql = "INSERT INTO "+ tableName + " (fileId, word, location) VALUES('" + id + "', '" + word + "', '" + ++location + "')";
+					Statement state = con.createStatement();
+					state.execute(sql);
+				}
+				src.close();
+			}
+			catch(SQLException | FileNotFoundException e){
+				
+			}
+		}
+		
+		//removes all words from index for the file id
+		private static void removeIndex(String id) {
+			try {
+				String sql = "DELETE FROM " + tableName + " WHERE fileId = " + id;
+				Statement state = con.createStatement();
+				state.execute(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		//Takes the String from the search bar and breaks it into smaller strings
@@ -148,12 +185,17 @@ public class SearchEngine {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				File file = new File(fileInfo[1]);
 				String dateModified  = dateFormat.format(file.lastModified()); 		
-				String dateIndexed = fileInfo[2];
+				String dateIndexed = null;
+				
+				if(!(fileInfo[2] == null)) {
+					dateIndexed = fileInfo[2];
+				}
 				
 				//if dateIndexed is after dateModified
-				if(dateIndexed.compareTo(dateModified) < 0) {
-					//reindex file
-					
+				if(dateIndexed == null || dateIndexed.compareTo(dateModified) < 0) {
+					//reindex file, clear from index and then index again
+					removeIndex(fileInfo[0]);
+					indexFile(fileInfo[0]);
 					
 					//update date indexed, this might need to go somewhere else but i made it before i thought about it.
 					//get current time
