@@ -15,7 +15,7 @@ public class SearchEngine {
 	
 		static public Connection con;
 		static final String[] columns = new String[] {"id", "fileId", "word", "location"};
-		static final String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer)"};
+		static final String[] dataType = new String[] {"integer", "integer", "varchar(50)", "integer"};
 		static final String tableName = "theWords";
 		static ArrayList<String> validIds;
 		
