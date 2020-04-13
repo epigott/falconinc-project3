@@ -114,14 +114,52 @@ public class FileDatabase {
 		return returnArray;
 	}
 	
-
-	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException{
-		// Written by E. Pigott
-		String[] returnArray = {"4","Pokemon\\Pikachu.mon"};
-		
-		return returnArray;
-	 }	
+	// Written by Eric Pigott
+	// Returns the contents of one or more table records from thePile, matching each primary key provided specified within input array. Will call getRow once for each record.
+	static public String[][] getRows(int[] primaryKeys) throws SQLException, IllegalArgumentException, IndexOutOfBoundsException {
+	  
+	  // Initializing return array.
+	  String[][] returnArray = new String[primaryKeys.length][3];
+	  
+	  // Logic loop.
+	  int x = 0;
+	  while (x < primaryKeys.length) {
+	    returnArray[x] = getRow(primaryKeys[x]);
+	    x++;
+	  }
+	  
+	  // Returning records.
+	  return returnArray;
+	  
+	}
 	
+	// Written by Eric Pigott
+	// Returns the contents of a table record from thePile, matching primary key specified in parameter. Can be called by itself to return only one record. 
+	static public String[] getRow(int primaryKey) throws SQLException, IllegalArgumentException, IndexOutOfBoundsException {
+	  // Setting query for use in this call.
+	  String sql = "select * from thePile where id = '" + primaryKey + "';";
+	  
+	  // Initializing return array.
+	  String[] returnArray = new String[3];
+	  
+	  // Making connection to database and executing query.
+	  Statement state = con.createStatement();
+		ResultSet res = state.executeQuery(sql);
+	  
+		// Pulling values from result set.
+		Integer id_int = res.getInt(1);
+		String fileName_String = res.getString(2);
+		String dateModified_String = res.getString(3);
+		
+		// Assigning those values to the appropriate return array position.
+		returnArray[0] = id_int.toString();
+		returnArray[1] = fileName_String.toString();
+		returnArray[2] = dateModified_String.toString();
+		
+		// Return record.
+		return returnArray;
+				
+	 }
 	
 	static public void deleteRow(String primaryKey) throws SQLException {
 		// Written by A.Chavan	

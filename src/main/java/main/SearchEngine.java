@@ -62,10 +62,55 @@ public class SearchEngine {
 			return returnArray;
 		}
 		
-		//
+
+		// Method written by Robert (Alex) Sapngler
 		private static ArrayList<String> andSearch(ArrayList<String> query) {
-			ArrayList<String> returnArray = query;	   	
-			return returnArray;
+                        //ArrayList to store and searched files.
+			ArrayList<String> andSrchArray = new ArrayList<String>();
+                                                
+                        // match valid file id's to the queried string.
+                        for (String s : query){
+                            try{
+                                // sql statemet for index
+                                String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
+                                //create statement for conn
+                                Statement state = con.createStatement();
+
+                                // create result statement 
+                                ResultSet result = state.executeQuery(index);
+
+                                // ArrayList to convert ResultSet to String
+                                ArrayList<String> resArray = new ArrayList<>();
+                                
+                               // check search to see if its empty or not.
+                               if(!result.next()){
+                                   // returns ",." if no records are found and breaks out of loop.
+                                   andSrchArray.add(",.");
+                                   break;
+                               }
+                               // checks if andSrchArray is empty   
+                               if(andSrchArray.contains(null)){
+                                   while(result.next()){
+                                        andSrchArray.add(result.getString(index));
+                                    }
+                               } else {
+                                   while(result.next()){
+                                       resArray.add(result.getString(index));
+                                   }
+                               }
+                               
+                               for (int x=0 ; x < resArray.size() ;++x) {
+                                    if(andSrchArray.contains(resArray.get(x))) {
+                                            andSrchArray.add(resArray.get(x));
+                                    }
+                                }
+                                                                                                   
+                            }catch(SQLException ex){
+                                System.out.println(ex);
+                                
+                            }
+                        }                       
+		        return andSrchArray;
 		}
 		
 		//
