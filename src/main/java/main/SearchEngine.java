@@ -84,14 +84,7 @@ public class SearchEngine {
 						orSearchArray.add(" ,.");
 						break;
 					}
-//					// check to see if either file search returns null or not
-//					ArrayList<String> resOne = null;
-//					ArrayList<String> resTwo = null;
-//					
-//					// if one search present, return either that is present
-//					if (resOne == null ) return resTwo;
-//					if (resTwo == null ) return resOne;
-//					
+			
 				} 
 				// catch SQL exception for file not valid or presentS
 				catch (SQLException e) {
