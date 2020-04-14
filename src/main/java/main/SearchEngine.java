@@ -108,61 +108,67 @@ public class SearchEngine {
 				        return andSrchArray;
 				}
 		
-		//
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
-			ArrayList<String> returnArray = query;	
-			ArrayList<String> firstArray = new ArrayList<String>();
+			ArrayList<String> returnArray = new ArrayList<String>();	
+			List<List<String>> firstArray = new ArrayList<List<String>>();
 			
 			try {
 	            String sql1 = "SELECT DISTINCT fileId, location FROM "+ tableName +" WHERE word ='"+ query.get(0) +"'";
+	            System.out.println(sql1);
 	            Statement state1;
 				state1 = con.createStatement();
-				ResultSet result1 = state1.executeQuery(sql1);
-            
-				if(!result1.next()){
+				ResultSet result1 = state1.executeQuery(sql1);            
+				
+				//if no result check
+				if(!result1.isBeforeFirst()){
 					returnArray.add(",.");
 					return returnArray;     
 				} else {
-					while(result1.next()){
-						firstArray.add(result1.getString("fileId"));
+					int j = 0;
+					while(result1.next()) {
+						firstArray.add(new ArrayList<String>());	
+						firstArray.get(j).add(result1.getString("fileId"));
+						firstArray.get(j).add(result1.getString("location"));
+						++j;
+					}
+								
+					for (int i = 0; i < firstArray.size(); i++) {
+						boolean exactMatch = true;
+						//if File id is already in return array move on to next one.
+						if(returnArray.contains(firstArray.get(i).get(0))) {
+							continue;
+						}
+						//starts at 1 because we already look for the first word
+						for (int x = 1; x < query.size(); x++) {
+							int location = Integer.parseInt(firstArray.get(i).get(1))+x;
+							// sql 
+							String sql2 = "SELECT DISTINCT fileId FROM " + tableName + 
+										" WHERE word ='" + query.get(x) + "'" +
+										" AND fileId ='" + firstArray.get(i).get(0) + "'" + 
+										" AND location ='" + location + "'";
+							System.out.println(sql2);
+							Statement state2;
+							state2 = con.createStatement();
+							ResultSet result2 = state2.executeQuery(sql2);
+							
+							//if a result comes back empty move on to the next
+							if(!result2.next()) {
+								exactMatch = false;
+								break;
+							}												
+						} 	
+						//if is exact match add.
+						if(exactMatch) {
+							returnArray.add(firstArray.get(i).get(0));
+						}
 					}
 				}
-				for (int x = 1; x < query.size(); x++){
-            	
-					ArrayList<String> resultArray = new ArrayList<String>();
-					// sql 
-					String sql2 = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ query.get(x) +"'";
-					Statement state2;
-					state2 = con.createStatement();
-					ResultSet result2 = state2.executeQuery(sql2);
-				
-					if(!result2.next()){
-						returnArray.add(",.");
-						return returnArray;   
-					}  
-					else {
-						resultArray.add(result2.getString("fileId"));
-					}
-					
-					for(int y = 0; y < firstArray.size(); ++y){                 
-						if(!resultArray.contains(firstArray.get(y))) {
-							firstArray.remove(y);       
-							--y;							
-						}
-					}                 
-				}  
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//Ready return array
-			if(firstArray.equals(null)) {
+			//if return array is empty
+			if(returnArray.size() == 0){
 				returnArray.add(",.");
-			}
-			else {
-				for(int y = 0; y < firstArray.size(); ++y){
-					returnArray.add(firstArray.get(y));
-				}
 			}
 			return returnArray;
 		}
