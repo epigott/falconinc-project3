@@ -47,7 +47,17 @@ public class SearchEngine {
 				case exact: searchResults = exactSearch(queryList);
 					break;
 			}
-			returnArray= validIdCheck(searchResults);
+			//validate id and get file path for display
+			ArrayList<String> validSearchResults= validIdCheck(searchResults);
+			for(int x = 0 ; x < validSearchResults.size(); ++x) {
+				try {
+					String[] middleMan= FileDatabase.getRow(Integer.parseInt(validSearchResults.get(x)));
+					returnArray.add(middleMan[1]);
+				} catch (IllegalArgumentException | IndexOutOfBoundsException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			return returnArray;
 		}
 		
