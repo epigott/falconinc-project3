@@ -62,15 +62,16 @@ public class SearchEngine {
 			
 			// Initialize an empty set of matching files
 			ArrayList<String> orSearchArray = new ArrayList<String>();
+		
+			// SQL query for index
+			String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
 			
 			// start of for loop for search query, check for valid fileID
 			for(String s : query ) {
 				
 				// try-catch SQL exception for checking valid queries
 				try {
-					// SQL query for index
-					String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ s +"'";
-					
+				
 					// create connection to index
 					Statement stmt = con.createStatement();
 					
