@@ -120,7 +120,7 @@ public class SearchEngine {
 		
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = new ArrayList<String>();	
-			List<List<String>> firstArray = new ArrayList<List<String>>();
+			ArrayList<ArrayList<String>> firstArray = new ArrayList<ArrayList<String>>();
 			
 			try {
 	            String sql1 = "SELECT DISTINCT fileId, location FROM "+ tableName +" WHERE word ='"+ query.get(0) +"'";
