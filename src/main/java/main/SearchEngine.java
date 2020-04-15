@@ -69,7 +69,7 @@ public class SearchEngine {
 			// start of for loop for search query, check for valid fileID
 			for(int x = 1; x < query.size(); x++) {
 				
-				index += " FOR word ='" + query.get(x) + "'" ;
+				index += " OR word ='" + query.get(x) + "'" ;
 			}
 			// try-catch SQL exception for checking valid queries
 			try {
