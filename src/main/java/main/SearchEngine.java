@@ -71,6 +71,7 @@ public class SearchEngine {
 				
 				index += " OR word ='" + query.get(x) + "'" ;
 			}
+			// Print out index to see search
 			System.out.println(index);
 			
 			// try-catch SQL exception for checking valid queries
