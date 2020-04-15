@@ -67,7 +67,7 @@ public class SearchEngine {
 			String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ query.get(0)+"'";
 			
 			// start of for loop for search query, check for valid fileID
-			for(int x = query.size()) {
+			for(int x = 1; x < query.size(); x++) {
 				
 				// try-catch SQL exception for checking valid queries
 				try {
