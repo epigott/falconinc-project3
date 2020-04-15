@@ -69,32 +69,30 @@ public class SearchEngine {
 			// start of for loop for search query, check for valid fileID
 			for(int x = 1; x < query.size(); x++) {
 				
-				// try-catch SQL exception for checking valid queries
-				try {
-				
-					// create connection to index
-					Statement stmt = con.createStatement();
-					
-					// store result statement, once statement executed
-					ResultSet r = stmt.executeQuery(index);
-					
-					
-					// check to see if result returns empty or not
-					if (!r.next()) {
-						//If user inputs no search words, output “ ,.”, for no match, break loop
-						orSearchArray.add(" ,.");
-						break;
-					}
+			}
+			// try-catch SQL exception for checking valid queries
+			try {
 			
-				} 
-				// catch SQL exception for file not valid or presentS
-				catch (SQLException e) {
-					// TODO Auto-generated catch block
-					// Print error warning
-					e.printStackTrace();
-				}
+				// create connection to index
+				Statement stmt = con.createStatement();
 				
-		}
+				// store result statement, once statement executed
+				ResultSet r = stmt.executeQuery(index);
+				
+				
+				// check to see if result returns empty or not
+				if (!r.next()) {
+					//If user inputs no search words, output “ ,.”, for no match, break loop
+					orSearchArray.add(" ,.");
+				}
+		
+			} 
+			// catch SQL exception for file not valid or presentS
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				// Print error warning
+				e.printStackTrace();
+			}
 			
 			return orSearchArray;
 		}
