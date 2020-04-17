@@ -90,10 +90,14 @@ public class SearchEngine {
 				
 				
 				// check to see if result returns empty or not
-				if (!r.next()) {
-					//If user inputs no search words, output “ ,.”, for no match, break loop
-					orSearchArray.add(" ,.");
-				}
+				
+					if (!r.isBeforeFirst()) {
+						//If user inputs no search words, output “ ,.”, for no match, break loop
+						orSearchArray.add(" , .");
+					}else{
+						while (r.next())
+							orSearchArray.add(r.getString("fileId"));
+					}
 		
 			} 
 			// catch SQL exception for file not valid or presentS
