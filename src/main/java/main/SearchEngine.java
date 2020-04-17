@@ -91,13 +91,13 @@ public class SearchEngine {
 				
 				// check to see if result returns empty or not
 				while (r.next())
-
-				if (!r.next()) {
-					//If user inputs no search words, output “ ,.”, for no match, break loop
 					orSearchArray.add(r.getString("fileId"));
-				}else{
-					
-				}
+					if (!r.next()) {
+						//If user inputs no search words, output “ ,.”, for no match, break loop
+						orSearchArray.add(" , .");
+					}else{
+						
+					}
 		
 			} 
 			// catch SQL exception for file not valid or presentS
