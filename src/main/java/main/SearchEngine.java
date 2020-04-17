@@ -91,7 +91,7 @@ public class SearchEngine {
 				
 				// check to see if result returns empty or not
 				
-					if (!r.next()) {
+					if (!r.isBeforeFirst()) {
 						//If user inputs no search words, output “ ,.”, for no match, break loop
 						orSearchArray.add(" , .");
 					}else{
