@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class SearchEngine {
@@ -47,24 +49,74 @@ public class SearchEngine {
 				case exact: searchResults = exactSearch(queryList);
 					break;
 			}
-			//validate id and get file path for display
-			ArrayList<String> validSearchResults= validIdCheck(searchResults);
-			for(int x = 0 ; x < validSearchResults.size(); ++x) {
-				try {
-					String[] middleMan= FileDatabase.getRow(Integer.parseInt(validSearchResults.get(x)));
-					returnArray.add(middleMan[1]);
-				} catch (IllegalArgumentException | IndexOutOfBoundsException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			//see if reuslts came back
+			if(searchResults.get(0).equals(",.")) {
+				returnArray = searchResults;
+			}
+			else {
+				//validate id and get file path for display
+				ArrayList<String> validSearchResults= validIdCheck(searchResults);
+				for(int x = 0 ; x < validSearchResults.size(); ++x) {
+					try {
+						String[] middleMan= FileDatabase.getRow(Integer.parseInt(validSearchResults.get(x)));
+						returnArray.add(middleMan[1]);
+					} catch (IllegalArgumentException | IndexOutOfBoundsException | SQLException e) {
+						e.printStackTrace();
+					}
 				}
+				//to make it look nicer sort the array
+				Collections.sort(returnArray);
 			}
 			return returnArray;
 		}
 		
-		//
+		// Written by A.Chavan
+		@SuppressWarnings("unused")
 		private static ArrayList<String> orSearch(ArrayList<String> query) {
-			ArrayList<String> returnArray = query;	
-			return returnArray;
+			
+			// Initialize an empty set of matching files
+			ArrayList<String> orSearchArray = new ArrayList<String>();
+		
+			// SQL query for index
+			String index = "SELECT DISTINCT fileId FROM "+ tableName +" WHERE word ='"+ query.get(0)+"'";
+			
+			// start of for loop for search query, check for valid fileID
+			for(int x = 1; x < query.size(); x++) {
+				
+				index += " OR word ='" + query.get(x) + "'" ;
+			}
+			// Print out index to see search
+			System.out.println(index);
+			
+			// try-catch SQL exception for checking valid queries
+			try {
+			
+				// create connection to index
+				Statement stmt = con.createStatement();
+				
+				// store result statement, once statement executed
+				ResultSet r = stmt.executeQuery(index);
+				
+				
+				// check to see if result returns empty or not
+				
+					if (!r.isBeforeFirst()) {
+						//If user inputs no search words, output “ ,.”, for no match, break loop
+						orSearchArray.add(" , .");
+					}else{
+						while (r.next())
+							orSearchArray.add(r.getString("fileId"));
+					}
+		
+			} 
+			// catch SQL exception for file not valid or presentS
+			catch (SQLException e) {
+				// TODO Auto-generated catch block
+				// Print error warning
+				e.printStackTrace();
+			}
+			
+			return orSearchArray;
 		}
 		
 		// Method written by Robert (Alex) Sapngler
@@ -88,7 +140,7 @@ public class SearchEngine {
 		                                ArrayList<String> resArray = new ArrayList<>();
 		                                
 		                               // check search to see if its empty or not.
-		                               if(!result.next()){
+		                               if(!result.isBeforeFirst()){
 		                                   // returns ",." if no records are found and breaks out of loop.
 		                                   andSrchArray.add(",.");
 		                                   break;
@@ -120,7 +172,7 @@ public class SearchEngine {
 		
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = new ArrayList<String>();	
-			List<List<String>> firstArray = new ArrayList<List<String>>();
+			ArrayList<List<String>> firstArray = new ArrayList<List<String>>();
 			
 			try {
 	            String sql1 = "SELECT DISTINCT fileId, location FROM "+ tableName +" WHERE word ='"+ query.get(0) +"'";
@@ -162,7 +214,7 @@ public class SearchEngine {
 							ResultSet result2 = state2.executeQuery(sql2);
 							
 							//if a result comes back empty move on to the next
-							if(!result2.next()) {
+							if(!result2.isBeforeFirst()) {
 								exactMatch = false;
 								break;
 							}												
