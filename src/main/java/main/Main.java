@@ -312,6 +312,11 @@ int searchType;
 							tf_searchBar_b.setText(tf_searchBar_h.getText());
 							tf_searchBar_h.setText("");
 						}
+                                                else {
+                                                    // prints out message if searchbar is blank
+                                                    JOptionPane.showMessageDialog(null,"Search is empty!"+
+                                                            "\nPlease fill search bar." );
+                                                }
 						
 						//Always do this. Gets search type.
 						searchQueary = tf_searchBar_b.getText();					
@@ -319,7 +324,7 @@ int searchType;
 							searchType = and;
 						}
 						else if(orSearch.isSelected()){
-							searchType = or;;
+							searchType = or;
 						}
 						else if(exactSearch.isSelected()){
 							searchType = exact;
