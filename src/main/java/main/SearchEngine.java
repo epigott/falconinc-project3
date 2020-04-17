@@ -90,13 +90,13 @@ public class SearchEngine {
 				
 				
 				// check to see if result returns empty or not
-				while (r.next())
-					orSearchArray.add(r.getString("fileId"));
+				
 					if (!r.next()) {
 						//If user inputs no search words, output “ ,.”, for no match, break loop
 						orSearchArray.add(" , .");
 					}else{
-						
+						while (r.next())
+							orSearchArray.add(r.getString("fileId"));
 					}
 		
 			} 
