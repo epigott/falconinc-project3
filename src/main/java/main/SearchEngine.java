@@ -9,6 +9,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class SearchEngine {
@@ -47,16 +49,23 @@ public class SearchEngine {
 				case exact: searchResults = exactSearch(queryList);
 					break;
 			}
-			//validate id and get file path for display
-			ArrayList<String> validSearchResults= validIdCheck(searchResults);
-			for(int x = 0 ; x < validSearchResults.size(); ++x) {
-				try {
-					String[] middleMan= FileDatabase.getRow(Integer.parseInt(validSearchResults.get(x)));
-					returnArray.add(middleMan[1]);
-				} catch (IllegalArgumentException | IndexOutOfBoundsException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			//see if reuslts came back
+			if(searchResults.get(0).equals(",.")) {
+				returnArray = searchResults;
+			}
+			else {
+				//validate id and get file path for display
+				ArrayList<String> validSearchResults= validIdCheck(searchResults);
+				for(int x = 0 ; x < validSearchResults.size(); ++x) {
+					try {
+						String[] middleMan= FileDatabase.getRow(Integer.parseInt(validSearchResults.get(x)));
+						returnArray.add(middleMan[1]);
+					} catch (IllegalArgumentException | IndexOutOfBoundsException | SQLException e) {
+						e.printStackTrace();
+					}
 				}
+				//to make it look nicer sort the array
+				Collections.sort(returnArray);
 			}
 			return returnArray;
 		}
@@ -131,7 +140,7 @@ public class SearchEngine {
 		                                ArrayList<String> resArray = new ArrayList<>();
 		                                
 		                               // check search to see if its empty or not.
-		                               if(!result.next()){
+		                               if(!result.isBeforeFirst()){
 		                                   // returns ",." if no records are found and breaks out of loop.
 		                                   andSrchArray.add(",.");
 		                                   break;
@@ -163,7 +172,7 @@ public class SearchEngine {
 		
 		private static ArrayList<String> exactSearch(ArrayList<String> query) {
 			ArrayList<String> returnArray = new ArrayList<String>();	
-			List<List<String>> firstArray = new ArrayList<List<String>>();
+			ArrayList<List<String>> firstArray = new ArrayList<List<String>>();
 			
 			try {
 	            String sql1 = "SELECT DISTINCT fileId, location FROM "+ tableName +" WHERE word ='"+ query.get(0) +"'";
@@ -205,7 +214,7 @@ public class SearchEngine {
 							ResultSet result2 = state2.executeQuery(sql2);
 							
 							//if a result comes back empty move on to the next
-							if(!result2.next()) {
+							if(!result2.isBeforeFirst()) {
 								exactMatch = false;
 								break;
 							}												
